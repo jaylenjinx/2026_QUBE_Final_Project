@@ -386,5 +386,4 @@ codegen/
 .MATLABDriveTag
 ## Project
 build/
-data_test_*.mat
 !MATLAB/sim_DP2_2026_SFC.p

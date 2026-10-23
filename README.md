@@ -1,53 +1,74 @@
-# 41277 Control Design – DP2: State-Feedback Control
+# 41277 Control Design: Final Project (QUBE-Servo 2)
 
-Demonstration Practical 2 for the QUBE-Servo 2 project (UTS, Spring 2026). Group report: model the setup, then design and simulate a discrete-time state-feedback controller and a Luenberger observer.
+Physical testing and design for the QUBE-Servo 2 rotary inverted pendulum (UTS, Spring 2026).
+Design, simulate and run three control systems on the hardware, then demonstrate them
+(Assessment Task 5, see [`docs/2026 - Task5 Assessment Criteria.pdf`](docs/2026%20-%20Task5%20Assessment%20Criteria.pdf)).
 
-**Deadline:** Sunday 18 October 2026 (+3 days automatically approved on Canvas). Submit one report per team on Canvas and the simulation files on MS Teams.
+This repo started as a copy of [2026_DP2_Report](https://github.com/jaylenjinx/2026_DP2_Report)
+with its full history, so the Q1 model and the Q2/Q3 controller and observer from DP2 are the
+starting point.
 
-## Tasks (see [`docs/2026_DP2.pdf`](docs/2026_DP2.pdf))
+## Control requirements
 
-| Q | Topic | Marks |
-|---|---|---|
-| Q1 | State-space model: first-principles derivation (Jacobian linearisation if nonlinear), parameters / system ID, discretisation | 40 |
-| Q2 | State-feedback control: controllability, `x*`/`u*` references, closed-loop eigenvalues, gain `F`, Simulink implementation (`run_observer = 0`) | 40 |
-| Q3 | Luenberger observer: observability, observer eigenvalues, gain `L`, observer-based SFC in Simulink (`run_observer = 1`, `x̂(0) ≠ x(0)`) | 20 |
+| Spec | Target |
+|---|---|
+| Overshoot | < 15 % |
+| Settling time | < 5 s |
+| Steady-state accuracy | < 50 |
 
-Project control requirements: overshoot < 15 %, settling time < 5 s, steady-state accuracy < 50.
+## The three control systems
 
-## Marking checklist
+| Folder | Design |
+|---|---|
+| [`Controllers/CS1A_frequency_continuous`](Controllers/CS1A_frequency_continuous) | CS1.A: design `C(s)` from `G(s)`, then discretise to `C(z)` |
+| [`Controllers/CS1B_frequency_discrete`](Controllers/CS1B_frequency_discrete) | CS1.B: discretise the plant to `G(z)`, then design `C(z)` directly; compare with CS1.A |
+| [`Controllers/CS2_SFC_observer`](Controllers/CS2_SFC_observer) | CS2: discrete-time SFC with a Luenberger observer, from the discrete state-space model (DP2) |
 
-- Signed statement of originality at the start (Turnitin-checked)
-- All text and equations typed; only your own figures
-- Engineering comments on every question (−2 per question if missing)
-- Show every step / MATLAB function used for numerical answers
-- Every figure numbered, captioned, referenced and commented in the text (−2)
-- Axis labels with units, e.g. `Time [s]` (−2)
-- Several variables in one plot: different colours and a legend (−2)
-- Zoomed plots for transients and steady-state error
-- MATLAB `plot()` figures (white background), no Simulink scope screenshots
-- Contribution level per student in the report (scales individual marks)
+A control system may combine several controllers. Each one must govern the whole system, not just one loop.
+
+## Assessment rules (Task 5)
+
+- **One MATLAB Function block per control system.** Reference filters, controllers and
+  observers all go inside that single block. Don't build them from Simulink blocks.
+- **15 min demo per team:** a 5 min presentation on your modelling, designs, simulations and
+  implementation, shared equally and not read from a script; a 5 min demonstration of all
+  three designs in simulation and on the hardware; then 5 min of questions.
+- **Files on MS Teams,** with one subfolder per controller. This repo's `Controllers/`
+  folders mirror that layout.
+- **Individually assessed.** Every team member must be able to run each simulation from
+  their own computer and change controller settings on request.
+- **Questions cover:** how the linear and nonlinear models were obtained, and how each
+  controller was chosen and designed for the target (not by trial and error or MATLAB
+  autotuning). Typical questions: how the sampling time was chosen; whether the plant is
+  open-loop stable; how to reduce overshoot without moving the closed-loop poles; how the
+  observer poles were chosen; how continuous eigenvalues map to discrete ones.
 
 ## Layout
 
 ```
-Report/                   LaTeX report (main.tex), styled after the Word answer template
-  assets/images/          exported MATLAB figures referenced by \optfig
-  assets/logos/
-MATLAB/                   DP2 simulation files (main_SFC.m, linear/nonlinear Simulink models, plot scripts)
-  qube_lab_template/      QUBE-Servo 2 hardware lab template (Ts = 1 ms, data save/plot scripts)
-docs/                     DP2 brief, Word answer template, QUBE-Servo 2 manual, data sheet, courseware
+Controllers/   one folder per control system (design scripts, sim and hardware models, runs)
+Hardware/      course lab template: CS01_RIP_QS2_SPI_T41_r2025b.slx and its scripts
+  data/        saved hardware runs (data_test_NN.mat), kept in git
+MATLAB/        DP2 model, SFC + observer design and simulation models (starting point)
+Report/        DP2 report (LaTeX), for reference
+docs/          Task 5 criteria, DP2 brief, QUBE-Servo 2 manual, data sheet, courseware
 ```
 
-## Building the report
+## Running the hardware template
 
-The VS Code LaTeX Workshop settings in `.vscode/` build with tectonic on save into `build/`. From the command line:
+`Hardware/CS01_RIP_QS2_SPI_T41_r2025b.slx` needs MATLAB R2025b.
+
+1. `Hardware_settings.m` runs before the model compiles. It sets `ts = 1/1000` and the
+   `save_data` flag.
+2. With `save_data = true`, `Hardware_data_save.m` runs after you stop the model and saves
+   the workspace as the next free `data_test_NN.mat` in the current folder. Move the runs
+   you want to keep into `Hardware/data/`, or into the controller's own folder, and commit them.
+3. `exp_data_processing.m` loads a saved run and plots `Vm`, `theta` and `alpha`.
+
+## Pulling later DP2 changes
+
+The DP2 repo is kept as the `upstream` remote:
 
 ```bash
-cd Report && tectonic -X compile main.tex --outdir ../build
+git fetch upstream && git merge upstream/main
 ```
-
-Missing figures render as placeholder boxes, so the report always compiles. Red `[TODO: …]` markers flag what still needs filling in.
-
-## Running the simulation
-
-Open `MATLAB/` in MATLAB and run `main_SFC.m`. Set `linear_model` (1 = linear, 0 = nonlinear) and `run_observer` (0 = SFC only, 1 = SFC + observer), and resize `x_hat_o` to the number of states.
