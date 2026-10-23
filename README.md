@@ -18,13 +18,26 @@ starting point.
 
 ## The three control systems
 
-| Folder | Design |
-|---|---|
-| [`Controllers/CS1A_frequency_continuous`](Controllers/CS1A_frequency_continuous) | CS1.A: design `C(s)` from `G(s)`, then discretise to `C(z)` |
-| [`Controllers/CS1B_frequency_discrete`](Controllers/CS1B_frequency_discrete) | CS1.B: discretise the plant to `G(z)`, then design `C(z)` directly; compare with CS1.A |
-| [`Controllers/CS2_SFC_observer`](Controllers/CS2_SFC_observer) | CS2: discrete-time SFC with a Luenberger observer, from the discrete state-space model (DP2) |
+| Folder | Design | Status |
+|---|---|---|
+| [`Controllers/CS1A_frequency_continuous`](Controllers/CS1A_frequency_continuous) | CS1.A: design `C(s)` from `G(s)`, then discretise to `C(z)` | Template, design to do |
+| [`Controllers/CS1B_frequency_discrete`](Controllers/CS1B_frequency_discrete) | CS1.B: discretise the plant to `G(z)`, then design `C(z)` directly; compare with CS1.A | Template, design to do |
+| [`Controllers/CS2_SFC_observer`](Controllers/CS2_SFC_observer) | CS2: discrete-time SFC with a Luenberger observer, from the discrete state-space model (DP2) | Working in simulation, hardware untested |
 
 A control system may combine several controllers. Each one must govern the whole system, not just one loop.
+
+Each folder is self-contained, so it can be uploaded to Teams as its own subfolder and run on
+any team member's computer:
+
+- **`params_<CS>.m`:** the design.
+- **`run_<CS>.m`:** linear and nonlinear simulations, with a check against the requirements.
+- **`ctrl_<CS>.slx`:** the controller as one MATLAB Function block. The simulation and
+  hardware models all reference this one file, so the code you simulate is the code that
+  runs on the QUBE.
+- **`hw_<CS>.slx`:** the course hardware template with the controller wired in. It loads
+  the same `params_<CS>.m` when it builds.
+
+See each folder's README for details.
 
 ## Assessment rules (Task 5)
 
@@ -46,7 +59,8 @@ A control system may combine several controllers. Each one must govern the whole
 ## Layout
 
 ```
-Controllers/   one folder per control system (design scripts, sim and hardware models, runs)
+Controllers/   one folder per control system (design, sim and hardware models, runs)
+  tools/       build_templates.m, which generates the folders (it won't overwrite existing ones)
 Hardware/      course lab template: CS01_RIP_QS2_SPI_T41_r2025b.slx and its scripts
   data/        saved hardware runs (data_test_NN.mat), kept in git
 MATLAB/        DP2 model, SFC + observer design and simulation models (starting point)
