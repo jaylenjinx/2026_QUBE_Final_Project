@@ -12,9 +12,9 @@
 ts = 1/1000;     % 1000 Hz sampling frequency
 
 %% Save Data at the end of the experimental test
-save_data = false;  % true:  save data
+save_data = true;  % true:  save data
                     % false: do not save data
 
 %% Add your own fixed variable here
-% Controller parameters: the same design file as the simulation
-run('params_CS1A.m');
+% N60 candidate controller parameters for the hardware test
+run(fullfile(fileparts(mfilename('fullpath')),'params_CS1A_candidate.m'));

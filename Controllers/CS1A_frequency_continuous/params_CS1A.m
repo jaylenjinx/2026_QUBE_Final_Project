@@ -12,15 +12,27 @@ G = tf(ss(Ac, Bc, Cc, Dc));
 G_theta = G(1);                     % theta(s)/Vm(s)
 G_alpha = G(2);                     % alpha(s)/Vm(s)
 
+%% Arm-position response targets (second-order approximation)
+zeta = 0.6;
+wn = 2.5;  % rad/s
+
+OS_estimate = 100*exp(-pi*zeta/sqrt(1-zeta^2));
+Ts_estimate = 4/(zeta*wn);
+
 %% Controller design in the s-domain                     <-- YOUR DESIGN HERE
-% Placeholders: every stage is off, so the motor voltage stays at 0 V.
 % Design each C(s) from G_theta and G_alpha to meet the requirements
 % (overshoot < 15 %, settling time < 5 s), and keep the reasoning for the report.
 % Check the signs against the model: Vm > 0 accelerates theta and alpha positively.
 s = tf('s');
-C_alpha_s = tf(0);                  % pendulum loop C_alpha(s)
-C_theta_s = tf(0);                  % arm loop C_theta(s)
-F_s       = tf(1);                  % reference prefilter F(s)
+% Pendulum compensator with leaky integration
+C_alpha_s = 181.48 * (1 + s/11.1614)^2 / ...
+    ((s + 0.1)*(1 + s/50));
+
+% Arm compensator: negative sign from the plant sign convention
+C_theta_s = -41.59 * (1 + s/1.43685) / (1 + s/0.1);
+
+% Arm-reference filter, unity DC gain
+F_s = 1 / (1 + s/1.43685);
 
 %% Discretisation C(s) -> C(z)
 c2d_method = 'tustin';              % e.g. 'tustin', 'zoh', 'matched'
