@@ -1,0 +1,40 @@
+xcp_drv_rtiostream.o: \
+ /Applications/MATLAB_R2025b.app/toolbox/coder/xcp/src/target/server/platform/default/xcp_drv_rtiostream.c \
+ /Applications/MATLAB_R2025b.app/toolbox/coder/rtiostream/src/rtiostream.h \
+ /Applications/MATLAB_R2025b.app/toolbox/coder/xcp/src/target/server/common/xcp_common.h \
+ /Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/rtwtypes.h \
+ /Applications/MATLAB_R2025b.app/toolbox/coder/xcp/src/target/server/platform/include/xcp_platform.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/toolbox/target/supportpackages/arduinotarget/include/xcp_platform_custom.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/Arduino.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/WProgram.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/avr/pgmspace.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/avr/interrupt.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/avr_functions.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/wiring.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/binary.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/core_id.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/core_pins.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/imxrt.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/pins_arduino.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/HardwareSerial.h \
+ /Applications/MATLAB_R2025b.app/toolbox/coder/xcp/src/target/server/include/xcp.h \
+ /Applications/MATLAB_R2025b.app/toolbox/coder/xcp/src/target/server/platform/default/xcp_drv.h
+/Applications/MATLAB_R2025b.app/toolbox/coder/rtiostream/src/rtiostream.h:
+/Applications/MATLAB_R2025b.app/toolbox/coder/xcp/src/target/server/common/xcp_common.h:
+/Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/rtwtypes.h:
+/Applications/MATLAB_R2025b.app/toolbox/coder/xcp/src/target/server/platform/include/xcp_platform.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/toolbox/target/supportpackages/arduinotarget/include/xcp_platform_custom.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/Arduino.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/WProgram.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/avr/pgmspace.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/avr/interrupt.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/avr_functions.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/wiring.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/binary.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/core_id.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/core_pins.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/imxrt.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/pins_arduino.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/HardwareSerial.h:
+/Applications/MATLAB_R2025b.app/toolbox/coder/xcp/src/target/server/include/xcp.h:
+/Applications/MATLAB_R2025b.app/toolbox/coder/xcp/src/target/server/platform/default/xcp_drv.h:

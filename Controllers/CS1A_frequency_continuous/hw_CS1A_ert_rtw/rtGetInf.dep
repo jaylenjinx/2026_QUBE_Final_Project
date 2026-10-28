@@ -1,0 +1,8 @@
+rtGetInf.o: \
+ /Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/rtGetInf.c \
+ /Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/rtwtypes.h \
+ /Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/rtGetInf.h \
+ /Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/rt_nonfinite.h
+/Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/rtwtypes.h:
+/Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/rtGetInf.h:
+/Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/rt_nonfinite.h:

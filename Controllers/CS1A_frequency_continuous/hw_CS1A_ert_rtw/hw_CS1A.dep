@@ -1,0 +1,64 @@
+hw_CS1A.o: \
+ /Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/hw_CS1A.c \
+ /Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/hw_CS1A.h \
+ /Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/rtwtypes.h \
+ /Applications/MATLAB_R2025b.app/simulink/include/rtw_extmode.h \
+ /Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/rtwtypes.h \
+ /Applications/MATLAB_R2025b.app/simulink/include/sysran_types.h \
+ /Applications/MATLAB_R2025b.app/simulink/include/rtw_continuous.h \
+ /Applications/MATLAB_R2025b.app/simulink/include/rtw_solver.h \
+ /Applications/MATLAB_R2025b.app/simulink/include/rtw_continuous.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/toolbox/target/supportpackages/arduinobase/include/MW_SPIwriteRead.h \
+ /Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/hw_CS1A_types.h \
+ /Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/rt_nonfinite.h \
+ /Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/rt_zcfcn.h \
+ /Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/zero_crossing_types.h \
+ /Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/rtGetNaN.h \
+ /Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/MW_target_hardware_resources.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/toolbox/target/supportpackages/arduinotarget/include/MW_ArduinoHWInit.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/toolbox/target/supportpackages/arduinotarget/scheduler/include/arduinoARMm7Scheduler.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/Arduino.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/WProgram.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/avr/pgmspace.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/avr/interrupt.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/avr_functions.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/wiring.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/binary.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/core_id.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/core_pins.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/imxrt.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/pins_arduino.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/HardwareSerial.h \
+ /Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/hw_CS1A_private.h \
+ /Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/multiword_types.h
+/Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/hw_CS1A.h:
+/Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/rtwtypes.h:
+/Applications/MATLAB_R2025b.app/simulink/include/rtw_extmode.h:
+/Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/rtwtypes.h:
+/Applications/MATLAB_R2025b.app/simulink/include/sysran_types.h:
+/Applications/MATLAB_R2025b.app/simulink/include/rtw_continuous.h:
+/Applications/MATLAB_R2025b.app/simulink/include/rtw_solver.h:
+/Applications/MATLAB_R2025b.app/simulink/include/rtw_continuous.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/toolbox/target/supportpackages/arduinobase/include/MW_SPIwriteRead.h:
+/Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/hw_CS1A_types.h:
+/Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/rt_nonfinite.h:
+/Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/rt_zcfcn.h:
+/Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/zero_crossing_types.h:
+/Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/rtGetNaN.h:
+/Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/MW_target_hardware_resources.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/toolbox/target/supportpackages/arduinotarget/include/MW_ArduinoHWInit.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/toolbox/target/supportpackages/arduinotarget/scheduler/include/arduinoARMm7Scheduler.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/Arduino.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/WProgram.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/avr/pgmspace.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/avr/interrupt.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/avr_functions.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/wiring.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/binary.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/core_id.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/core_pins.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/imxrt.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/pins_arduino.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/HardwareSerial.h:
+/Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/hw_CS1A_private.h:
+/Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/multiword_types.h:

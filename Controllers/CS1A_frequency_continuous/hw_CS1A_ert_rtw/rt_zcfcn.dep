@@ -1,0 +1,12 @@
+rt_zcfcn.o: \
+ /Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/rt_zcfcn.c \
+ /Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/zero_crossing_types.h \
+ /Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/rtwtypes.h \
+ /Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/rt_zcfcn.h \
+ /Applications/MATLAB_R2025b.app/simulink/include/solver_zc.h \
+ /Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/rtwtypes.h
+/Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/zero_crossing_types.h:
+/Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/rtwtypes.h:
+/Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/rt_zcfcn.h:
+/Applications/MATLAB_R2025b.app/simulink/include/solver_zc.h:
+/Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS1A_frequency_continuous/hw_CS1A_ert_rtw/rtwtypes.h:
