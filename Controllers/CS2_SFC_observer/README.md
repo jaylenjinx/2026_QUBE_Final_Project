@@ -3,9 +3,10 @@
 A discrete-time SFC with integral action and a Luenberger observer, designed from the
 discrete state-space model.
 
-**Status: rebuilt for the hardware, not yet tested on it.** For a 45° arm step, simulation
-gives 1.5 % overshoot and 0.98 s settling on both the linear and nonlinear plants, with the
-voltage peaking at 3.1 V. `hw_CS2.slx` compiles for the Teensy.
+**Status: balances on the QUBE; retuned to recover from bumps.** The first hardware version
+worked but fell over when bumped. For a 45° arm step, simulation gives 0.6 % overshoot and
+0.95 s settling on both the linear and nonlinear plants, with the voltage peaking at 1.6 V.
+`hw_CS2.slx` compiles for the Teensy. The bump retune hasn't been tested on the QUBE yet.
 
 ## Control structure
 
@@ -38,7 +39,7 @@ x̂(k+1)     = A x̂(k) + B u(k) + Lo (y(k) − C x̂(k))
 | | Poles [1/s] |
 |---|---|
 | SFC | −5.6 ± 5.7j (ωn = 8 rad/s, ζ = 0.7), −19.2, −25.6 |
-| Integrator | −8 |
+| Integrator | −1 |
 | Observer | −90, −95, −100, −105 (about 4× the fastest SFC pole) |
 | DP2, for reference | SFC −1.5 ± 2j, −6, −8; observer −40 to −55 |
 
@@ -46,15 +47,31 @@ x̂(k+1)     = A x̂(k) + B u(k) + Lo (y(k) − C x̂(k))
 stable while the real motor delivers at least 0.87× its modelled gain. Fitting the model to
 the CS1.A hardware runs suggests the effective gain is lower than that, probably because of
 friction at the small balancing voltages. The CS1.A design, which balances on the QUBE,
-tolerates 0.53×–10×, so CS2 now uses the same bandwidth: it's stable for 0.48×–4.8×.
+tolerates 0.53×–10×, so CS2 now uses the same bandwidth: it's stable for 0.45×–5.3×.
+
+**Why the integrator pole is slow.** The integrator pole was first at −8. That roughly
+tripled the arm gain, so a small bump drove the voltage to ±10 V and the pendulum fell. At
+−1 the gains stay close to plain SFC.
+
+A bump test simulates the nonlinear plant with the real `ctrl_CS2` code, quantised
+encoders, the voltage limit, a weaker motor and friction, and kicks the balanced pendulum.
+The largest pendulum kick recovered:
+
+| Motor strength | 0.6× | 0.8× | 1× |
+|---|---|---|---|
+| Integrator pole −8 (before) | 91°/s | 119°/s | 137°/s |
+| Integrator pole −1 (now) | 152°/s | 197°/s | 229°/s |
+
+The trade-off is that friction offsets are removed over about a second rather than a few
+hundred milliseconds. If bumps are still a problem, `wn = 7` recovers about 10 % more but
+leaves less margin for a weak motor (0.50× instead of 0.45×).
 
 **Simulated with real-world effects.** A discrete simulation adds quantised encoders
 (2048 counts per revolution), the ±10 V limit and stick–slip arm friction:
 
-- **No friction:** 1.7 % overshoot, 0.99 s settling.
-- **With friction:** neither plain SFC nor the integral version settles fully, because the
-  arm hunts around the target. The integral version roughly halves the remaining error:
-  1.2–2.3° compared with 1.8–4.5° without it.
+- **No friction:** 1.3 % overshoot, 0.93 s settling.
+- **With friction:** the arm hunts around the target rather than settling fully, with an
+  average error of about 1.7°. Plain SFC under the same conditions is worse, at about 1.8–4.5°.
 
 The friction model is a rough guess, so expect the real numbers to differ.
 

@@ -20,8 +20,12 @@ ps = [-zeta*wn + 1i*wn*sqrt(1-zeta^2), -zeta*wn - 1i*wn*sqrt(1-zeta^2), ...
 %% Integral action: removes the arm offset that friction leaves
 % Augmented state x_i(k+1) = x_i(k) + ts*(theta(k) - r), so with
 % K = [F, Fi] the control law is u = -F (x - x*) - Fi x_i.
+% The integrator pole is kept slow: at -8 it roughly tripled the arm gain, so a
+% small bump saturated the voltage and knocked the pendulum over. At -1 the gains
+% stay close to plain SFC (about 65 % bigger bumps recovered in simulation),
+% and friction offsets are removed over about a second instead.
 use_integral = true;                % false: plain SFC (Fi = 0)
-p_int    = -8;                      % integrator pole [1/s]
+p_int    = -1;                      % integrator pole [1/s]
 int_band = 2*pi/180;                % integrate only within +/-2 deg of the reference [rad]
 ref_tau  = 0.2;                     % reference filter time constant [s] (0 = off)
 
