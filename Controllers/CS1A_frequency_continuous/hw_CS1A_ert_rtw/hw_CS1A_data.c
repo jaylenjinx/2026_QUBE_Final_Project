@@ -9,7 +9,7 @@
  *
  * Model version                  : 3.47
  * Simulink Coder version         : 25.2 (R2025b) 28-Jul-2025
- * C/C++ source code generated on : Wed Oct 28 19:43:03 2026
+ * C/C++ source code generated on : Fri Oct 30 11:39:50 2026
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -276,7 +276,7 @@ P_hw_CS1A_T hw_CS1A_P = {
   /* Computed Parameter: ControllerEnable_CurrentSetti_e
    * Referenced by: '<Root>/Controller Enable'
    */
-  0U,
+  1U,
 
   /* Computed Parameter: STOPSimulation_CurrentSetting
    * Referenced by: '<Root>/STOP Simulation'
@@ -286,7 +286,7 @@ P_hw_CS1A_T hw_CS1A_P = {
   /* Computed Parameter: SensorsReset_CurrentSetting
    * Referenced by: '<Root>/Sensors Reset'
    */
-  1U
+  0U
 };
 
 /*
