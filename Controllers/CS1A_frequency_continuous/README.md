@@ -87,3 +87,23 @@ These commands do not change the original parameter file or run hardware.
   `Int_reset` signal, so every time it's switched on it starts fresh.
 - The arm reference is the `theta ref [deg]` constant at the top level of `hw_CS1A.slx`. The
   template sets it to 45°; start with a smaller step.
+
+## Current hardware PID trial
+
+Hardware_settings.m now loads params_CS1A_PID.m. This keeps the N60 pendulum
+filtered PD and existing reference filter, and replaces only the arm controller
+with the filtered PID developed interactively in Control System Designer.
+Its normalised editor gain is -1.997, zeros are approximately -2.23017 and -0.5,
+and poles are 0 and -60. Tustin conversion uses Ts = 0.001 s.
+
+Reported ideal digital nonlinear 45-degree test: 0% overshoot, 3.188 s settling,
+2.6075 degrees peak pendulum displacement and 0.8923 V peak combined command.
+The 0.2 V constant-input disturbance test removed the nominal PD arm offset.
+Quantised-encoder testing, dedicated anti-windup and physical PID validation are
+still pending. The generic controller currently clips its output at +/-10 V.
+
+hw_CS1A is saved with motor/controller disabled, reference zero and protection
+on. Reopen it from disk and rebuild for a lab test. The original run_CS1A still
+loads the original baseline; to simulate this PID, load params_CS1A_PID and call
+the simulation model directly. Do not describe run_CS1A's baseline results as PID
+results. The preceding sections describe the older baseline/PD workflow.

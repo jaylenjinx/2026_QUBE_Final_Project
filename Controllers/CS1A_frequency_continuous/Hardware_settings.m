@@ -16,5 +16,5 @@ save_data = true;  % true:  save data
                     % false: do not save data
 
 %% Add your own fixed variable here
-% N60 candidate controller parameters for the hardware test
-run(fullfile(fileparts(mfilename('fullpath')),'params_CS1A_candidate.m'));
+% Arm PID from Control System Designer; existing N60 pendulum PD and filter
+run(fullfile(fileparts(mfilename('fullpath')),'params_CS1A_PID.m'));
