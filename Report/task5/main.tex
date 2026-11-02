@@ -1,0 +1,883 @@
+%=======================================================================
+%  41277 Control Design -- Spring 2026
+%  Assessment Task 5: Team Project Report (QUBE-Servo 2 rotary pendulum)
+%
+%  Build from this folder:  latexmk -pdf main.tex
+%  Numbers quoted as \Macro{} come from results.tex, written by
+%  make_figures.m together with every plot in figures/. Re-run that
+%  script after any design change, then rebuild.
+%  \todo{...} marks content only the team can supply (red in the PDF).
+%=======================================================================
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[lining]{ebgaramond}
+\usepackage[margin=2.2cm,top=3.0cm,headheight=42pt]{geometry}
+\usepackage{amsmath,amssymb,bm}
+\usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{xcolor}
+\usepackage{listings}
+\usepackage[colorlinks=true,linkcolor=black,urlcolor=blue!60!black,
+            citecolor=black]{hyperref}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{6pt}
+\allowdisplaybreaks
+\raggedbottom
+
+\newcommand{\todo}[1]{\textcolor{red}{\textbf{[TODO:} #1\textbf{]}}}
+\lstset{language=Matlab,basicstyle=\ttfamily\footnotesize,frame=single,
+        keywordstyle=\color{blue!70!black},commentstyle=\color{green!45!black},
+        stringstyle=\color{purple!70!black},breaklines=true,columns=fullflexible}
+
+\graphicspath{{figures/}}
+\newcommand{\fig}[4][0.85]{%
+  \begin{figure}[H]\centering\includegraphics[width=#1\linewidth]{#2}%
+  \caption{#3}\label{#4}\end{figure}}
+
+\input{results.tex}
+
+\fancypagestyle{uts}{%
+  \fancyhf{}
+  \fancyhead[L]{\includegraphics[height=22pt]{../assets/logos/uts_logo.png}\quad
+                \textbf{Task 5: Team Project Report}}
+  \fancyhead[R]{\footnotesize\begin{tabular}{@{}r@{}}
+                41277 Control Design\\ Spring 2026\\
+                Coordinator: A/Prof Ricardo P. Aguilera
+                \end{tabular}}
+  \renewcommand{\headrulewidth}{0.4pt}
+  \fancyfoot[C]{\thepage}
+}
+\pagestyle{uts}
+
+\begin{document}
+
+%=========================== COVER PAGE ================================
+\thispagestyle{empty}
+\includegraphics[height=30pt]{../assets/logos/uts_logo.png}\hfill
+{\large\bfseries Faculty of Engineering and IT}
+
+\vspace{10pt}
+\fbox{%
+\begin{minipage}{\dimexpr\textwidth-2\fboxsep-2\fboxrule\relax}
+\vspace{4pt}
+\centering{\Large\bfseries Assignment Cover Sheet}\par
+\vspace{8pt}
+\raggedright
+\textbf{Subject:} 41277 Control Design\par
+\vspace{4pt}
+\textbf{Assignment Number:} Assessment Task 5
+\hfill \textbf{Date Submitted:} \todo{date}\par
+\vspace{4pt}
+\textbf{Assignment Title:} Team Project Report: Frequency-Domain and
+State-Feedback Control of the QUBE-Servo 2 Rotary Inverted Pendulum\par
+\vspace{4pt}
+\textbf{Student Name(s) and Number(s)}\hfill\textbf{Tutorial Group:} 02\par
+\vspace{4pt}
+\begin{tabular}{@{}p{4.2cm}p{3cm}p{5cm}@{}}
+Jaylen Avtarovski & 24767939 & Contribution: \todo{\%}\\[4pt]
+Rhyse Williams    & 24817532 & Contribution: \todo{\%}\\[4pt]
+Elina Kim         & 24949885 & Contribution: \todo{\%}\\
+\end{tabular}
+
+\vspace{8pt}
+\textbf{Declaration of Originality:}\par
+{\small The work contained in this assignment, other than that specifically
+attributed to another source, is that of the author(s). It is recognised
+that, should this declaration be found to be false, disciplinary action
+could be taken and the assignments of all students involved will be given
+zero marks. In the statement below, I have indicated the extent to which I
+have collaborated with other students, whom I have named.\par}
+
+\vspace{6pt}
+\textbf{Statement of Collaboration:}\par
+\todo{The three team members above collaborated on all sections of this
+report and on the design, simulation and hardware testing of both control
+systems. Edit to describe how the team actually worked.}\par
+
+\vspace{6pt}
+\textbf{GenAI Declaration:}\par
+\todo{Declare every generative-AI tool used and what it was used for
+(for example drafting text, LaTeX formatting, MATLAB plotting scripts),
+following the subject coordinator's advice. This must be accurate.}\par
+
+\vspace{10pt}
+\textbf{Signature} \quad \todo{initials} \hfill \textbf{Date} \todo{date}\par
+\vspace{4pt}
+\end{minipage}}
+
+\vspace{12pt}
+\textbf{Individual contribution levels.} As permitted by the assessment
+criteria, the team states each member's contribution level, which scales
+the individual report mark (individual mark $=$ group mark $\times$
+contribution level).
+\begin{table}[H]\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Student}&\textbf{Contribution level}&\textbf{Main activities}\\
+\midrule
+Jaylen Avtarovski&\todo{\%}&\todo{}\\
+Rhyse Williams&\todo{\%}&\todo{}\\
+Elina Kim&\todo{\%}&\todo{}\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\clearpage
+\tableofcontents
+\clearpage
+
+%=======================================================================
+\section*{Acknowledgements}
+\addcontentsline{toc}{section}{Acknowledgements}
+\todo{Thank the people who helped: the teaching team and lab staff,
+classmates, family, and so on.}
+
+%=======================================================================
+\section{Introduction}
+The rotary inverted pendulum is a benchmark problem in control
+engineering. A motor-driven horizontal arm must hold a freely hinged
+pendulum upright, an open-loop unstable equilibrium, while also tracking a
+commanded arm angle~\cite{furuta1992,astrom2000}. This project uses the
+Quanser QUBE-Servo~2 with a Teensy~4.1 microcontroller running the
+UTS ControLab Simulink template~\cite{qube_manual,hardware_template}.
+
+The team designed, simulated and implemented two control systems that each
+govern the whole system:
+\begin{enumerate}[nosep]
+\item \textbf{CS1, frequency domain.} Two transfer-function controllers,
+  $C_\theta(s)$ for the arm and $C_\alpha(s)$ for the pendulum, plus a
+  reference prefilter $F(s)$. They are designed in the $s$-domain and
+  discretised to $C(z)$ for implementation.
+\item \textbf{CS2, time domain.} A discrete-time state-feedback controller
+  (SFC) with integral action and a Luenberger observer, designed from the
+  discrete state-space model.
+\end{enumerate}
+Both controllers run inside a single MATLAB Function block at
+$T_s=1$~ms. The same block is used by the linear simulation, the
+nonlinear simulation and the code generated for the Teensy, so the code
+that was simulated is the code that ran on the QUBE.
+
+\textbf{Report structure.} Section~\ref{sec:lit} reviews the background,
+Section~\ref{sec:objectives} states the control objectives,
+Section~\ref{sec:model} develops and verifies the model, and
+Section~\ref{sec:calib} covers sensor calibration.
+Sections~\ref{sec:cs1} and~\ref{sec:cs2} present the design,
+implementation and results of each control system.
+Section~\ref{sec:compare} compares the two designs,
+Section~\ref{sec:feedback} responds to the feedback from the final
+demonstration, and Section~\ref{sec:conclusion} concludes.
+
+%=======================================================================
+\section{Literature review}\label{sec:lit}
+Furuta \emph{et al.}~\cite{furuta1992} introduced the rotary pendulum as
+a compact alternative to the cart--pole. It shares the cart--pole's
+non-minimum-phase, underactuated dynamics but needs only a rotary joint
+and no rail. Åström and Furuta~\cite{astrom2000} later separated the
+problem into energy-based swing-up and linear stabilisation about the
+upright equilibrium. This project addresses the second part: the
+pendulum is raised by hand and the controller catches it near upright.
+
+Classical frequency-domain design shapes the open-loop transfer function
+so that the closed loop meets bandwidth and robustness targets, which are
+expressed as gain and phase margins and the peak sensitivity
+$M_s$~\cite{franklin_feedback,ogata}. For an open-loop unstable plant, the
+Nyquist criterion requires the loop to encircle $-1$ once for each
+unstable pole. The gain margin therefore becomes a \emph{band} of
+admissible gains with both a lower and an upper limit.
+
+State-space design instead places all closed-loop eigenvalues directly by
+full-state feedback. That needs the velocities, which are not measured on
+the QUBE, so they are reconstructed by an observer~\cite{aguilera2026,ogata}.
+For digital implementation, the continuous designs are mapped to the
+$z$-domain by Tustin or zero-order-hold equivalents, and continuous poles
+map to $z=e^{sT_s}$~\cite{franklin_digital,mathworks_c2d}.
+
+Inverted-pendulum stabilisation is the core problem in self-balancing
+transporters, legged and humanoid robot balance, rocket attitude control
+during vertical launch, and crane anti-sway control. This is why it is so
+widely used as a teaching and research benchmark~\cite{ctms}.
+
+%=======================================================================
+\section{Control objectives}\label{sec:objectives}
+Each control system must keep the pendulum upright ($\alpha\to0$) and move
+the arm to a commanded angle $r$. Table~\ref{tab:specs} lists the targets.
+The arm step used to assess every design is $r=45^\circ$. Its $\pm2\%$
+settling band ($\pm0.9^\circ$) is about five encoder counts wide
+($0.176^\circ$ per count). For a $5^\circ$ step the band would be smaller
+than two counts, so the settling time could not be measured reliably.
+\begin{table}[H]\centering
+\caption{Closed-loop performance requirements.}\label{tab:specs}
+\begin{tabular}{lll}
+\toprule
+\textbf{Quantity}&\textbf{Requirement}&\textbf{Reason}\\
+\midrule
+Arm overshoot $M_p$&$<15\%$&Project specification\\
+Arm settling time $t_s$ (2\%)&$<5$~s&Project specification\\
+Steady-state accuracy&\todo{confirm the specification}&Project specification\\
+Motor voltage $|V_m|$&$\le10$~V&Amplifier limit~\cite{qube_manual}\\
+Pendulum angle $|\alpha|$&small, about $<15^\circ$&Keeps the linear model valid\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+%=======================================================================
+\section{System modelling and model verification}\label{sec:model}
+The model was derived in Demonstration Practical~2 and is reused here
+unchanged, so both controllers are designed from the same plant.
+
+\subsection{Nonlinear model and linearisation}
+\input{sections/modelling.tex}
+
+\subsection{Transfer functions for frequency-domain design}
+From $G(s)=C_c(sI-A_c)^{-1}B_c$ (MATLAB \texttt{tf(ss(Ac,Bc,Cc,Dc))}),
+both outputs share the denominator
+\begin{equation}\label{eq:Dplant}
+D(s)=s\,(s^3+d_3s^2+d_2s+d_1)=s^4+11.70s^3-144.47s^2-704.84s,
+\end{equation}
+where $d_3=(aD_p+bd)/\Delta_0$, $d_2=(dD_p-ah)/\Delta_0$ and
+$d_1=-dh/\Delta_0$. The two transfer functions are
+\begin{align}
+G_\theta(s)=\frac{\theta(s)}{V_m(s)}&=
+\frac{18.07s^2+67.86s-2060.9}{D(s)}
+=\frac{18.07\,(s-8.97)(s+12.72)}{s\,(s-9.95)(s+4.02)(s+17.6)},\label{eq:Gth}\\
+G_\alpha(s)=\frac{\alpha(s)}{V_m(s)}&=\frac{17.86\,s^2}{D(s)}
+=\frac{17.86\,s}{(s-9.95)(s+4.02)(s+17.6)}.\label{eq:Gal}
+\end{align}
+These transfer functions show three properties that drive the design:
+\begin{itemize}[nosep]
+\item \textbf{Open-loop unstable.} The pole at $s=+9.95$~s$^{-1}$ is the
+  falling pendulum (time constant about 0.1~s), and the pole at $s=0$
+  reflects that the arm has no restoring force. A stabilising
+  pendulum loop is mandatory.
+\item \textbf{Non-minimum phase arm.} $G_\theta$ has a right-half-plane
+  zero at $s=+8.97$. To move the arm positively, the base must first
+  swing the wrong way to tilt the pendulum. This limits the achievable arm
+  bandwidth and causes the initial undershoot seen in the responses.
+\item \textbf{Zero at $s=0$ in $G_\alpha$.} A constant voltage cannot hold
+  a steady tilt, so the pendulum loop alone cannot fix the arm position.
+  An outer arm loop is required.
+\end{itemize}
+
+\subsection{Model verification}\label{sec:verify}
+The linear model was verified against the nonlinear model by simulating
+both with the same controller code. For the $45^\circ$ arm step, the
+pendulum stays within $\AlcsAN^\circ$ (CS1) and $\AlcsBN^\circ$ (CS2) of
+upright. The linear and nonlinear responses overlap within plotting
+accuracy (Figures~\ref{fig:cs1sim} and~\ref{fig:cs2sim}), which confirms
+that the small-angle assumption holds over the operating range.
+
+Model signs were checked on the hardware. With the controller disabled and
+a small positive voltage applied, $\theta$ increased as the model
+predicts. The pendulum encoder measured $\alpha$ in the opposite direction
+to the model's convention, so a gain of $-1$ was placed before the
+controller (Section~\ref{sec:calib}). After this correction the CS1
+controller balanced the pendulum on its first attempt, which independently
+confirms the sign structure of~\eqref{eq:Gth}--\eqref{eq:Gal}.
+\todo{If the team ran an open-loop or system-identification test, add a
+measured-versus-model plot here. The DP2 damping values are textbook
+estimates, not identified from this QUBE.}
+
+%=======================================================================
+\section{Calibration of transducers and sensors}\label{sec:calib}
+Both angles are measured by quadrature encoders with 2048 counts per
+revolution, a resolution of $2\pi/2048=3.07$~mrad ($0.176^\circ$) per
+count~\cite{qube_manual}. The calibration steps were:
+\begin{enumerate}[nosep]
+\item \textbf{Zero of $\alpha$.} The pendulum encoder counts from the angle
+  at power-up. The pendulum is therefore started hanging down, where the
+  template measures $\alpha=-\pi$, and the template's offset makes upright
+  $\alpha=0$, as the model requires. Each run starts by checking that the
+  hanging reading is $-180^\circ$.
+\item \textbf{Direction of $\alpha$.} A gain of $-1$ makes a positive
+  tilt match the model's $-\bm e_t$ convention (Section~\ref{sec:verify}).
+\item \textbf{Direction and zero of $\theta$.} The arm angle is zero at
+  power-up. A positive voltage increases the measured $\theta$, matching
+  the model, so no correction was needed.
+\item \textbf{Motor voltage.} The commanded $V_m$ is saturated to
+  $\pm10$~V inside the controller block, so the observer and the logged data
+  always see the voltage the amplifier actually applies.
+\item \textbf{Encoder read errors.} The logged arm angle contains
+  occasional single-sample spikes of the order of $10^5$ degrees (\hwGlitches{} in
+  run~04). These are SPI read errors, not motion, and they are removed
+  before plotting by holding the previous sample whenever $\theta$ jumps
+  by more than $90^\circ$ in 1~ms.
+\end{enumerate}
+\todo{Describe any further calibration the team did, for example
+checking the encoder scale against a protractor at $\pm90^\circ$.}
+
+%=======================================================================
+\section{Control System 1: frequency-domain design}\label{sec:cs1}
+\subsection{Control structure and why it was chosen}
+Figure~\ref{fig:cs1block} shows the structure. The plant has one input and
+two outputs, so a single SISO loop cannot both stabilise $\alpha$ and fix
+$\theta$ (Section~\ref{sec:model}). Two controllers act on one voltage:
+\begin{equation}\label{eq:cs1law}
+V_m=\operatorname{sat}_{\pm10}\Big[C_\theta(s)\big(F(s)r-\theta\big)
+-C_\alpha(s)\,\alpha\Big].
+\end{equation}
+\begin{figure}[H]\centering
+\setlength{\unitlength}{1mm}
+\begin{picture}(150,46)
+  \put(0,36){\vector(1,0){12}}\put(2,38){$r$}
+  \put(12,31){\framebox(14,10){$F(s)$}}
+  \put(26,36){\vector(1,0){10}}
+  \put(38,36){\circle{4}}\put(34,39){\small$+$}\put(39,31){\small$-$}
+  \put(40,36){\vector(1,0){8}}
+  \put(48,31){\framebox(16,10){$C_\theta(s)$}}
+  \put(64,36){\line(1,0){8}}\put(74,26){\circle{4}}
+  \put(72,36){\line(1,0){2}}\put(74,36){\vector(0,-1){8}}\put(76,31){\small$+$}
+  \put(52,8){\framebox(16,10){$C_\alpha(s)$}}
+  \put(68,13){\line(1,0){6}}\put(74,13){\vector(0,1){11}}\put(76,17){\small$-$}
+  \put(76,26){\vector(1,0){10}}\put(78,28){\small$V_m$}
+  \put(86,19){\framebox(26,14){\shortstack{QUBE\\$G_\theta,G_\alpha$}}}
+  \put(112,30){\line(1,0){20}}\put(124,32){$\theta$}
+  \put(132,30){\line(0,1){14}}\put(132,44){\line(-1,0){94}}\put(38,44){\vector(0,-1){6}}
+  \put(112,22){\line(1,0){20}}\put(124,17){$\alpha$}
+  \put(132,22){\line(0,-1){18}}\put(132,4){\line(-1,0){72}}\put(60,4){\vector(0,1){4}}
+  \put(46,0){\dashbox{1}(72,46){}}
+\end{picture}
+\caption{CS1 structure. Everything inside the dashed box runs in one
+MATLAB Function block at $T_s=1$~ms. The saturation is omitted for
+clarity.}\label{fig:cs1block}
+\end{figure}
+
+\textbf{Controller type.} Both $C_\theta$ and $C_\alpha$ are filtered PD
+controllers:
+\begin{equation}\label{eq:pd}
+C_i(s)=K_{p,i}+K_{d,i}\frac{Ns}{s+N},\qquad i\in\{\theta,\alpha\},\qquad
+N=60~\mathrm{rad/s}.
+\end{equation}
+\begin{itemize}[nosep]
+\item \emph{Derivative action} adds the phase lead needed to stabilise the
+  unstable pole at $s=+9.95$. A proportional-only pendulum loop cannot do
+  this, because the gravity term makes the loop phase too negative near
+  crossover.
+\item \emph{The first-order filter} at $N=60$~rad/s limits the gain on
+  encoder quantisation noise. An ideal derivative of a signal that changes
+  in $0.176^\circ$ steps every few milliseconds would drive the voltage
+  between its limits. $N$ is placed about $3\times$ above the target
+  crossover of about 20~rad/s, so the filter costs only about $18^\circ$ of
+  phase there.
+\item \emph{No integrator} is needed. The plant already contains the
+  free integrator $1/s$ from arm angle to voltage, so the arm loop is type~1
+  and has zero steady-state error to a step without friction.
+\end{itemize}
+
+\subsection{Design method}\label{sec:cs1design}
+\textbf{Step 1: target closed-loop poles from the specifications.} The
+dominant pair is chosen from the second-order relations
+$M_p=e^{-\pi\zeta/\sqrt{1-\zeta^2}}$ and $t_s\approx4/(\zeta\omega_n)$:
+\begin{equation}
+\zeta=0.7\Rightarrow M_p=4.6\%<15\%,\qquad
+\omega_n=8~\mathrm{rad/s}\Rightarrow t_s\approx\frac{4}{0.7\times8}=0.71~\mathrm s<5~\mathrm s.
+\end{equation}
+This leaves margin for the RHP zero, friction and quantisation, which all
+slow and degrade the real response. The bandwidth was \emph{not} set by
+the settling-time limit alone. An earlier, slower design ($\omega_n=2.5$,
+$\zeta=0.6$) met the specifications in simulation but showed a persistent
+arm oscillation once encoder quantisation was modelled. Its pendulum loop
+had too little gain to reject the quantised measurement. The faster pole
+set raises the pendulum-loop gain while keeping the voltage small.
+
+Two further poles are placed at $-2.4\omega_n=-19.2$ and
+$-3.2\omega_n=-25.6$, at least $3\times$ faster than the dominant pair, so
+they add little to the transient.
+
+\textbf{Step 2: characteristic polynomial.} With~\eqref{eq:pd} written as
+$C_i(s)=\big[(K_{p,i}+K_{d,i}N)s+K_{p,i}N\big]/(s+N)$ and the plant
+numerators $n_\theta(s)=n_2s^2+n_1s+n_0$ and $n_\alpha(s)=m_2s^2$, the
+closed-loop characteristic equation of~\eqref{eq:cs1law} is
+\begin{equation}\label{eq:char}
+D(s)(s+N)+n_\theta(s)\big[(K_{p\theta}+K_{d\theta}N)s+K_{p\theta}N\big]
++n_\alpha(s)\big[(K_{p\alpha}+K_{d\alpha}N)s+K_{p\alpha}N\big]=0.
+\end{equation}
+This polynomial has degree five, and its $s^5$ and $s^4$ coefficients
+($1$ and $N+d_3=71.70$) do not depend on the gains. The sum of the five
+closed-loop poles is therefore fixed at $-(N+d_3)$, so the fifth pole is
+\emph{not} free:
+\begin{equation}
+p_5=-(N+d_3)-\big(2(-5.6)-19.2-25.6\big)=-15.7~\mathrm s^{-1}.
+\end{equation}
+This pole is still faster than the dominant pair.
+
+\textbf{Step 3: solve for the gains.} Matching the $s^3,s^2,s^1,s^0$
+coefficients of~\eqref{eq:char} with
+$\prod_{k=1}^5(s-p_k)=s^5+71.70s^4+1936.5s^3+24971s^2+162900s+493873$
+gives four linear equations in the four gains:
+\begin{equation}
+\underbrace{\begin{bmatrix}
+n_2&n_2N&m_2&m_2N\\
+n_1+n_2N&n_1N&m_2N&0\\
+n_0+n_1N&n_0N&0&0\\
+n_0N&0&0&0\end{bmatrix}}_{M}
+\begin{bmatrix}K_{p\theta}\\K_{d\theta}\\K_{p\alpha}\\K_{d\alpha}\end{bmatrix}
+=\begin{bmatrix}1936.5-557.5\\24971+9373\\162900+42291\\493873-0\end{bmatrix},
+\end{equation}
+where the right-hand side is the desired coefficient minus the
+corresponding coefficient of $D(s)(s+N)$. $M$ is nonsingular because
+$n_0\ne0$ and $m_2\ne0$: the plant has no pole--zero cancellation that
+would leave a closed-loop pole uncontrollable by the two loops. Solving with
+\texttt{M\textbackslash rhs} in MATLAB (\texttt{params\_CS1A\_candidate.m})
+gives
+\begin{equation}
+K_{p\theta}=\KpTheta,\quad K_{d\theta}=\KdTheta,\quad
+K_{p\alpha}=\KpAlpha,\quad K_{d\alpha}=\KdAlpha.
+\end{equation}
+\begin{itemize}[nosep]
+\item \textbf{Arm gains are negative.} The RHP zero makes $n_0<0$, so
+  the steady-state arm gain is negative. To move the arm towards $+r$, the
+  arm loop must command a negative voltage first, tilting the pendulum
+  forward.
+\item \textbf{Pendulum loop dominates.} $K_{p\alpha}\gg|K_{p\theta}|$,
+  as expected: the pendulum loop provides stability, and the arm loop is
+  a slow outer correction.
+\end{itemize}
+
+\textbf{Step 4: reference prefilter.} The arm controller adds a closed-loop
+zero at
+$z_\theta=-K_{p\theta}N/(K_{p\theta}+K_{d\theta}N)=-2.23$~s$^{-1}$. This
+is slower than the dominant poles and would cause large overshoot. The
+prefilter cancels this zero from the reference path and adds a smooth
+3~rad/s lag:
+\begin{equation}
+F(s)=\frac{2.23}{s+2.23}\cdot\frac{3}{s+3},\qquad F(0)=1.
+\end{equation}
+$F(s)$ is outside the feedback loop, so it changes the overshoot and the
+voltage demand \emph{without moving the closed-loop poles}. This is the
+standard way to reduce overshoot while keeping the designed stability and
+disturbance rejection~\cite{franklin_feedback}.
+
+\subsection{Frequency-domain verification}
+The design is verified on the loop transfer function broken at the motor
+input, $L(s)=C_\theta(s)G_\theta(s)+C_\alpha(s)G_\alpha(s)$, so that
+$V_m=-L(s)V_m$ around the loop. This is the single point that both loops
+share, and where a motor-gain error or an actuator delay enters.
+$L(s)$ was built in state space (\texttt{ss([C\_theta\_s, C\_alpha\_s])*G})
+because the product of high-order transfer-function polynomials is
+numerically ill-conditioned.
+
+\fig{cs1a_bode}{Bode diagram of the CS1 loop $L(j\omega)$ at the motor
+input. The gain crosses 0~dB at $\omega_c=\WcpcsA$~rad/s with a phase
+margin of $\PMcsA^\circ$.}{fig:cs1bode}
+
+Figure~\ref{fig:cs1bode} shows the loop crossing 0~dB at
+$\omega_c=\WcpcsA$~rad/s with a phase margin of $\PMcsA^\circ$. The phase
+starts near $-270^\circ$ and rises through $-180^\circ$ at about 7~rad/s,
+which is characteristic of a loop that must stabilise an unstable pole:
+\begin{itemize}[nosep]
+\item By the Nyquist criterion, $L$ has one RHP pole ($P=1$), so stability
+  requires one anticlockwise encirclement of $-1$. The phase must cross
+  $-180^\circ$ from below while $|L|>1$.
+\item The resulting gain margin is a band:
+  \begin{itemize}[nosep]
+  \item the loop gain may fall to $\GMlowcsA\times$ nominal before the
+    pendulum is lost;
+  \item it may rise without limit in the continuous model.
+  \end{itemize}
+\item In the implemented discrete loop (Tustin controller, ZOH plant,
+  $T_s=1$~ms), the band is $\GMlowcsAz$--$\GMupcsAz\times$, with a phase
+  margin of $\PMcsAz^\circ$ and a delay margin of $\DMcsAz$ samples
+  ($\DMcsAz$~ms).
+\end{itemize}
+The lower limit is the practical constraint. Friction at the small
+balancing voltages reduces the effective motor gain, and the design
+tolerates a reduction of almost half.
+
+\fig[0.75]{cs1a_rlocus}{Root locus of $kL(s)$ as the loop-gain multiplier
+$k$ varies. Stars mark the designed closed-loop poles at $k=1$. The
+diamonds mark the poles at $k=\GMlowcsA$, where a complex pair is on the
+imaginary axis.}{fig:cs1rl}
+
+Figure~\ref{fig:cs1rl} gives the same information as a root locus:
+\begin{itemize}[nosep]
+\item As $k$ increases from zero, the branches from the unstable pole
+  $s=+9.95$ and the integrator pole $s=0$ meet on the real axis and break
+  away as a complex pair. This pair crosses into the left half-plane at
+  $s\approx\pm7.3j$ when $k=\GMlowcsA$, which is the lower gain margin and
+  the $-180^\circ$ crossing frequency of Figure~\ref{fig:cs1bode}.
+\item At $k=1$ the five poles sit exactly at the targets of
+  Step~1, confirming the algebra.
+\item Near $k=1$, the dominant pair moves only slowly along its branch
+  towards the nearby open-loop zeros, so moderate gain errors change the
+  damping only slightly.
+\end{itemize}
+
+\fig[0.75]{cs1a_sensitivity}{Sensitivity $S(j\omega)$ and complementary
+sensitivity $T(j\omega)$ of the CS1 loop.}{fig:cs1sens}
+
+The peak sensitivity is $M_s=\MscsA$ (Figure~\ref{fig:cs1sens}), within
+the usual guideline of $M_s<2$~\cite{franklin_feedback}. Disturbances
+below about 5~rad/s, such as a bump or friction, are attenuated. The
+peak near $\omega_c$ amplifies disturbances by at most $\MscsA\times$.
+Above 100~rad/s, $|T|$ rolls off, so encoder quantisation noise is
+attenuated before it reaches the motor.
+
+\subsection{Discretisation}
+The controllers are mapped to the $z$-domain with the bilinear (Tustin)
+transform $s\leftarrow\frac{2}{T_s}\frac{z-1}{z+1}$, using MATLAB
+\texttt{c2d(C\_s, ts, 'tustin')}~\cite{mathworks_c2d}:
+\begin{align}
+C_\alpha(z)&=\frac{181.770-179.271z^{-1}}{1-0.94175z^{-1}},\qquad
+C_\theta(z)=\frac{-104.438+104.205z^{-1}}{1-0.94175z^{-1}},\\
+F(z)&=\frac{1.668\times10^{-6}(1+2z^{-1}+z^{-2})}{1-1.99478z^{-1}+0.99478z^{-2}}.
+\end{align}
+The derivative-filter pole maps to $z=0.94175$, close to $e^{-NT_s}=0.94176$.
+Tustin was chosen for two reasons:
+\begin{itemize}[nosep]
+\item it maps the stable left half-plane onto the unit disc, so a stable
+  $C(s)$ always gives a stable $C(z)$;
+\item it preserves the frequency response up to the frequency-warping
+  term, which is negligible here because $\omega_cT_s\approx0.02$.
+\end{itemize}
+Figure~\ref{fig:cs1c2d} confirms that $C_\alpha(z)$ and $C_\alpha(s)$ are
+indistinguishable up to 1000~rad/s. The sampling rate is 50 times the
+crossover frequency, and the extra phase lag from the ZOH, about
+$\omega_cT_s/2=0.6^\circ$, is negligible.
+
+\fig[0.7]{cs1a_c2d}{Magnitude of the pendulum controller $C_\alpha(s)$
+and of its Tustin discretisation $C_\alpha(z)$ at $T_s=1$~ms.}{fig:cs1c2d}
+
+\subsection{Implementation}
+The control law~\eqref{eq:cs1law} runs in one MATLAB Function block
+(\texttt{ctrl\_CS1A.slx}). That block is referenced by the linear
+simulation, the nonlinear simulation and the hardware model, so all three
+use the same code. Each stage $b(z^{-1})/a(z^{-1})$ is evaluated as a
+difference equation in direct form~II transposed, which needs only $n$
+states for an $n$th-order stage. The block also does the following:
+\begin{itemize}[nosep]
+\item When the controller is disabled (\texttt{reset}=1), it clears every
+  stage state and outputs 0~V, so enabling it causes no voltage jump.
+\item It saturates $V_m$ to $\pm10$~V.
+\end{itemize}
+The coefficients come from \texttt{params\_CS1A\_candidate.m}, which
+\texttt{Hardware\_settings.m} runs before every build.
+\begin{lstlisting}
+[r_f, wF]     = lti_step(bF, aF, r, wF);              % F(z)
+[u_theta, wT] = lti_step(bT, aT, r_f - theta, wT);    % C_theta(z)
+[u_alpha, wA] = lti_step(bA, aA, 0 - alpha, wA);      % C_alpha(z)
+u = min(max(u_theta + u_alpha, -u_max), u_max);        % +/-10 V limit
+
+function [y, w] = lti_step(b, a, x, w)   % y = b(z^-1)/a(z^-1) x, DF-II T
+n = numel(a) - 1;  y = b(1)*x;
+if n > 0
+    y = y + w(1);
+    for i = 1:n-1, w(i) = b(i+1)*x + w(i+1) - a(i+1)*y; end
+    w(n) = b(n+1)*x - a(n+1)*y;
+end
+end
+\end{lstlisting}
+
+\subsection{Simulation results}
+\fig{cs1a_sim}{CS1 simulated response to a $45^\circ$ arm step at $t=1$~s
+on the linear and nonlinear plant models: arm angle $\theta$, pendulum
+angle $\alpha$ and motor voltage $V_m$.}{fig:cs1sim}
+\fig[0.8]{cs1a_sim_zoom}{Zoom on the CS1 arm transient of
+Figure~\ref{fig:cs1sim}, with the $\pm2\%$ settling band.}{fig:cs1zoom}
+
+Figures~\ref{fig:cs1sim} and~\ref{fig:cs1zoom} show the response:
+\begin{itemize}[nosep]
+\item \textbf{Initial undershoot.} The arm first moves slightly negative,
+  the signature of the RHP zero. The voltage goes negative first to tilt
+  the pendulum forward.
+\item \textbf{Specifications met.} The arm then rises without overshoot
+  ($M_p=\OScsAN\%$) and settles within 2\% in $t_s=\TscsAN$~s on the
+  nonlinear plant, well inside both requirements.
+\item \textbf{Prefilter effect.} The settling time is longer than the
+  0.71~s dominant-pole estimate because the 3~rad/s prefilter lag deliberately
+  slows the \emph{reference}. This keeps the peak voltage at only
+  $\UcsAN$~V and the pendulum tilt at $\AlcsAN^\circ$.
+\item \textbf{Linear and nonlinear agree.} The two curves coincide,
+  because $\alpha$ stays small.
+\end{itemize}
+
+\subsection{Experimental results}
+\fig{hw_cs1a_run04}{CS1 running on the QUBE-Servo~2 (run~04). The
+pendulum is caught at the start of the trace and then balanced for
+\hwT~s, during which it was bumped by hand several times.}{fig:cs1hw}
+\fig[0.8]{hw_cs1a_bump}{Zoom on Figure~\ref{fig:cs1hw} around the
+largest bump: pendulum angle (left axis) and motor voltage (right
+axis).}{fig:cs1bump}
+
+Figure~\ref{fig:cs1hw} shows CS1 balancing on the hardware for \hwT~s:
+\begin{itemize}[nosep]
+\item \textbf{Balancing.} Excluding the catch transient, the pendulum
+  angle has a standard deviation of $\hwAlphaStd^\circ$, about five
+  encoder counts, and an RMS voltage of \hwVrms~V.
+\item \textbf{Bump rejection.} The pendulum was bumped by hand several
+  times. The largest bump tilted it by $\hwBumpPeak^\circ$, and
+  Figure~\ref{fig:cs1bump} shows it back within $\pm2^\circ$ in about
+  \hwRecover~s. The voltage briefly reaches about 5~V, and the response is
+  well damped, as the $M_s=\MscsA$ of
+  Figure~\ref{fig:cs1sens} predicts.
+\item \textbf{Voltage chatter.} The persistent $\pm1$~V ripple in $V_m$
+  comes from the derivative terms acting on the quantised encoder
+  signals.
+\item \textbf{Arm drift.} The arm drifts slowly through a range of
+  about $\pm110^\circ$. Without integral action, Coulomb friction lets the
+  arm rest anywhere inside a dead band, and each bump moves that resting
+  point. \todo{Confirm what the operator was doing with the arm and the
+  reference during run~04.}
+\end{itemize}
+\todo{Record a hardware $45^\circ$ arm step with CS1 (with the reference
+logged) and add its plot and its measured $M_p$, $t_s$ and steady-state
+error here. Runs 01--04 contain balancing and bumps only, with no logged
+step.}
+
+%=======================================================================
+\section{Control System 2: discrete-time state feedback with an observer}\label{sec:cs2}
+\subsection{Control structure and why it was chosen}
+State feedback uses all four states, so it can place every closed-loop
+pole directly. CS1 could only place five poles through four gains, with
+the fifth fixed by the pole-sum constraint. The design is done entirely
+in discrete time on the ZOH model $(A,B,C)$ of Section~\ref{sec:model},
+so no further approximation is introduced at implementation. Three
+additions turn the DP2 SFC into a controller that works on the hardware:
+\begin{itemize}[nosep]
+\item a \textbf{Luenberger observer}, because only $\theta$ and $\alpha$ are measured;
+\item \textbf{integral action} on the arm error, to remove the offset
+  caused by friction;
+\item a \textbf{first-order reference filter}, to keep a $45^\circ$ step
+  inside the voltage limit.
+\end{itemize}
+The control law is
+\begin{align}
+r_f[k+1]&=r_f[k]+\tfrac{T_s}{\tau}\big(r-r_f[k]\big),\qquad\tau=0.2~\mathrm s,\\
+x_i[k+1]&=x_i[k]+T_s\big(\theta[k]-r\big),\\
+u[k]&=\operatorname{sat}_{\pm10}\Big[-F\big(\hat x[k]-x^*\big)-F_ix_i[k]\Big],\qquad x^*=[r_f\ 0\ 0\ 0]^T,\\
+\hat x[k+1]&=A\hat x[k]+Bu[k]+L_o\big(y[k]-C\hat x[k]\big).
+\end{align}
+
+\subsection{Controllability and observability}
+The controllability matrix $\mathcal C=[B\ AB\ A^2B\ A^3B]$ and the
+observability matrix $\mathcal O=[C;\,CA;\,CA^2;\,CA^3]$ both have rank
+4 (MATLAB \texttt{rank(ctrb(A,B))} and \texttt{rank(obsv(A,C))}). All
+closed-loop poles can therefore be placed, and the full state can be
+reconstructed from the two encoders. The open-loop discrete poles include
+$z=e^{9.95T_s}=1.00999$, outside the unit circle, which confirms the
+unstable plant.
+
+\subsection{Pole selection}
+The poles are chosen in the $s$-plane from the specifications and mapped
+to the $z$-plane with $z=e^{sT_s}$. This mapping is exact for the ZOH
+model, since $A=e^{A_cT_s}$:
+\begin{itemize}[nosep]
+\item \textbf{SFC.} A dominant pair with $\zeta=0.7$ and $\omega_n=8$~rad/s
+  ($-5.6\pm5.71j$), plus $-19.2$ and $-25.6$. This is the same
+  bandwidth as CS1. The DP2 poles ($\omega_n=2.5$) met the specification
+  in simulation, but they left the loop stable only while the motor
+  delivered at least $0.87\times$ its modelled gain. The CS1 hardware
+  runs showed the real effective gain is lower, so the faster set, which
+  tolerates $\GMlowcsB\times$, was adopted.
+\item \textbf{Integrator.} The pole is at $-1$~s$^{-1}$. It was first
+  placed at $-8$, but that roughly tripled the arm gain, so a small bump
+  saturated the voltage and the pendulum fell. At $-1$, the gains stay
+  close to plain SFC and friction offsets are removed in about one second.
+\item \textbf{Observer.} The poles are at $-90,-95,-100,-105$~s$^{-1}$,
+  about $4\times$ faster than the fastest SFC pole, so the estimate
+  converges well before the controller acts on it. They are not made
+  faster, because a faster observer passes more quantisation noise into
+  the velocity estimates.
+\end{itemize}
+
+\subsection{Gain calculation}
+\begin{itemize}[nosep]
+\item \textbf{SFC and integral gains.} $F$ and $F_i$ are computed
+  together on the augmented system
+  $A_a=\begin{bmatrix}A&0\\T_s[1\ 0\ 0\ 0]&1\end{bmatrix}$,
+  $B_a=\begin{bmatrix}B\\0\end{bmatrix}$ with
+  \texttt{place(Aa, Ba, exp([ps p\_int]*ts))}, giving
+  \[F=\FcsB,\qquad F_i=\FicsB.\]
+\item \textbf{Observer gain.} By duality, it is
+  $L_o=$\texttt{place(A', C', exp(po\_s*ts))'}.
+\end{itemize}
+Broken at the plant input, the state-feedback loop has a gain margin band
+of $\GMlowcsB$--$\GMupcsB\times$ and a phase margin of $\PMcsB^\circ$.
+These are wider than CS1, because state feedback uses the measured
+velocities rather than a filtered derivative.
+
+\fig[0.6]{cs2_zplane}{CS2 poles in the $z$-plane, zoomed near $z=1$:
+open-loop poles of $A$ (one outside the unit circle), the SFC poles and
+the observer poles.}{fig:cs2z}
+Figure~\ref{fig:cs2z} shows the mapping $z=e^{sT_s}$ at work:
+\begin{itemize}[nosep]
+\item the unstable open-loop pole sits just outside the unit circle;
+\item the SFC poles move it inside;
+\item the faster observer poles lie further from $z=1$, because a larger
+  $|s|$ maps to a smaller $|z|$.
+\end{itemize}
+
+\subsection{Implementation}
+Like CS1, the whole controller is one MATLAB Function block
+(\texttt{ctrl\_CS2.slx}) shared by both simulations and the hardware. It
+includes three practical details:
+\begin{itemize}[nosep]
+\item \textbf{Bumpless start.} On enable, the observer starts from the
+  measured angles with zero velocities, $r_f$ starts from the measured
+  $\theta$, and $x_i=0$, so the controller starts without a voltage jump.
+\item \textbf{Conditional integration with anti-windup.} The integrator
+  updates only while $|\theta-r|\le2^\circ$, and not while the voltage is
+  saturated in the direction that would increase it. Integrating during
+  the whole $45^\circ$ move produced 44\% overshoot in simulation.
+\item \textbf{Observer driven by the saturated voltage.} The observer uses
+  the limited $u$, so it models the input the motor actually receives.
+\end{itemize}
+\begin{lstlisting}
+u_unlimited = -F*(xh - x_ref) - Fi*xi;
+u = min(max(u_unlimited, -u_max), u_max);
+e = theta - r;  dxi = ts*e;
+winding_up = (u_unlimited > u_max && -Fi*dxi > 0) || (u_unlimited < -u_max && -Fi*dxi < 0);
+if abs(e) <= int_band && ~winding_up && ~reset, xi = xi + dxi; end
+xh = A*xh + B*u + Lo*(y - C*xh);                     % Luenberger observer
+\end{lstlisting}
+
+\subsection{Simulation results}
+\fig{cs2_sim}{CS2 simulated response to a $45^\circ$ arm step at $t=1$~s
+on the linear and nonlinear plant models.}{fig:cs2sim}
+\fig[0.8]{cs2_sim_zoom}{Zoom on the CS2 arm transient of
+Figure~\ref{fig:cs2sim}, with the $\pm2\%$ settling band.}{fig:cs2zoom}
+
+CS2 settles in $t_s=\TscsBN$~s with $M_p=\OScsBN\%$ on the nonlinear
+plant (Figures~\ref{fig:cs2sim} and~\ref{fig:cs2zoom}). This is faster
+than CS1, because the reference filter ($\tau=0.2$~s) is lighter than
+CS1's prefilter. The cost is a higher peak voltage ($\UcsBN$~V) and a
+larger pendulum excursion ($\AlcsBN^\circ$), both still well inside
+their limits.
+
+\subsection{Experimental results}
+CS2 balances the pendulum on the QUBE. The first hardware version fell
+over when bumped, which led to the integrator-pole change described
+above. \todo{Add the CS2 hardware run: balance, bump and $45^\circ$ step
+with the reference logged, with its plot and measured $M_p$, $t_s$ and
+steady-state error. No CS2 hardware data is saved in the repository yet.}
+
+%=======================================================================
+\section{Comparison of the two control systems}\label{sec:compare}
+\begin{table}[H]\centering
+\caption{Performance for a $45^\circ$ arm step. Simulation values are from
+\texttt{make\_figures.m}; hardware values are still to be measured.}\label{tab:compare}
+\begin{tabular}{lcccc}
+\toprule
+&\multicolumn{2}{c}{\textbf{CS1 (frequency domain)}}&\multicolumn{2}{c}{\textbf{CS2 (SFC + observer)}}\\
+&Nonlinear sim.&Hardware&Nonlinear sim.&Hardware\\
+\midrule
+Overshoot $M_p$ [\%]&\OScsAN&\todo{}&\OScsBN&\todo{}\\
+Settling time $t_s$ [s]&\TscsAN&\todo{}&\TscsBN&\todo{}\\
+Peak $|V_m|$ [V]&\UcsAN&\todo{}&\UcsBN&\todo{}\\
+Peak $|\alpha|$ [deg]&\AlcsAN&\todo{}&\AlcsBN&\todo{}\\
+Gain margin band&$\GMlowcsAz$--$\GMupcsAz$&--&$\GMlowcsB$--$\GMupcsB$&--\\
+Phase margin [deg]&\PMcsAz&--&\PMcsB&--\\
+\bottomrule
+\end{tabular}
+\end{table}
+\todo{Discuss Table~\ref{tab:compare} once the hardware columns are
+filled: which controller tracks better, which rejects bumps better, voltage
+chatter, and the friction offset (CS2 has integral action, CS1 does not).}
+
+%=======================================================================
+\section{Response to feedback from the final demonstration}\label{sec:feedback}
+\todo{List each comment or question from the teaching team at the final
+demonstration, what the team changed or tested in response, and the
+result with a figure or number. This section is marked as its own
+criterion.}
+
+%=======================================================================
+\section{Conclusions and future work}\label{sec:conclusion}
+Two control systems were designed from the same physically derived
+model of the QUBE-Servo~2 and implemented as single MATLAB Function
+blocks at 1~kHz.
+
+\textbf{CS1.} Two filtered PD controllers with gains computed from
+specification-driven pole targets were verified by Bode, root-locus and
+sensitivity analysis. They have a $\PMcsAz^\circ$ phase margin and
+tolerate a motor gain down to $\GMlowcsAz\times$ nominal. In simulation,
+CS1 meets the requirements with no overshoot and $t_s=\TscsAN$~s. On the
+hardware, it balanced the pendulum for minutes and recovered from hand
+bumps.
+
+\textbf{CS2.} The discrete SFC with integral action and an observer meets
+the requirements in simulation, with $M_p=\OScsBN\%$ and
+$t_s=\TscsBN$~s. Its integral action removes the friction offset that CS1
+leaves.
+
+\textbf{Key lessons.}
+\begin{itemize}[nosep]
+\item \textbf{Robustness as well as nominal specifications.} Designs that
+  met the specifications on the nominal model failed on the hardware or
+  under modelled quantisation. Bandwidth had to be chosen for robustness
+  to the real motor gain and the encoder resolution.
+\item \textbf{One shared code path.} Keeping the simulated and
+  implemented code identical made hardware debugging a matter of
+  physics, not code.
+\end{itemize}
+
+\textbf{Future work.}
+\begin{enumerate}[nosep]
+\item Identify the motor gain and Coulomb friction of this QUBE
+  experimentally and add friction compensation.
+\item Add integral action to CS1.
+\item Design CS1 directly in the $z$-domain and compare it with the
+  $s$-domain design.
+\item Add an energy-based swing-up~\cite{astrom2000} so that the system
+  starts from hanging down without manual help.
+\end{enumerate}
+\todo{Revise once hardware step results and demonstration feedback are
+added.}
+
+%=======================================================================
+\begin{thebibliography}{99}
+\bibitem{aguilera2026}
+R. P. Aguilera, \emph{41277 Control Design Lecture Notes}, University of
+Technology Sydney, Australia, 2026.
+
+\bibitem{furuta1992}
+K. Furuta, M. Yamakita and S. Kobayashi, ``Swing-up control of inverted
+pendulum using pseudo-state feedback,'' \emph{Proc. Inst. Mech. Eng. Part
+I: J. Syst. Control Eng.}, vol.~206, no.~4, pp.~263--269, 1992.
+
+\bibitem{astrom2000}
+K. J. Åström and K. Furuta, ``Swinging up a pendulum by energy control,''
+\emph{Automatica}, vol.~36, no.~2, pp.~287--295, 2000.
+
+\bibitem{franklin_feedback}
+G. F. Franklin, J. D. Powell and A. Emami-Naeini, \emph{Feedback Control of
+Dynamic Systems}, 8th ed., Pearson, 2019.
+
+\bibitem{franklin_digital}
+G. F. Franklin, J. D. Powell and M. L. Workman, \emph{Digital Control of
+Dynamic Systems}, 3rd ed., Addison-Wesley, 1998.
+
+\bibitem{ogata}
+K. Ogata, \emph{Modern Control Engineering}, 5th ed., Prentice Hall, 2010.
+
+\bibitem{ctms}
+B. Messner and D. Tilbury, \emph{Control Tutorials for MATLAB and
+Simulink}, University of Michigan. [Online]. Available:
+\url{https://ctms.engin.umich.edu/CTMS}
+
+\bibitem{mathworks_c2d}
+The MathWorks, Inc., ``c2d: Convert model from continuous to discrete
+time,'' MATLAB documentation. [Online]. Available:
+\url{https://www.mathworks.com/help/control/ref/dynamicsystem.c2d.html}
+
+\bibitem{qube_manual}
+Quanser Inc., \emph{QUBE-Servo 2 User Manual}, Markham, ON, Canada.
+
+\bibitem{qube_courseware}
+Quanser Inc., \emph{QUBE-Servo Workbook -- Student}, v2.0,
+\emph{Pendulum State-Space Model}, in-lab exercise 6.
+
+\bibitem{hardware_template}
+R. P. Aguilera, \emph{ControLab Rotary Inverted Pendulum Template},
+\texttt{CS01\_RIP\_QS2\_T41\_r2025b}, University of Technology Sydney, 2026.
+\end{thebibliography}
+
+\end{document}

@@ -1,0 +1,359 @@
+
+\textbf{Definitions and assumptions.}
+The QUBE-Servo 2 rotary pendulum comprises a motor-driven horizontal arm
+and a pendulum hinged at its tip. Encoders measure the two angles
+\cite{qube_manual}. Let $\theta$ denote arm angle and $\alpha$ pendulum
+angle from the upward vertical, with $\alpha=0$ upright. Use radians.
+Let $\boldsymbol e_r$ point along the arm, $\boldsymbol e_t$ point in the
+direction of increasing $\theta$ and $\boldsymbol e_z$ point upward.
+Positive $\alpha$ tilts the pendulum towards $-\boldsymbol e_t$.
+This explicitly fixes the coupling signs.
+
+The arm and pendulum are approximated as rigid uniform slender rods.
+The pendulum centre of mass is at $l_p=L_p/2$. Viscous damping represents
+friction. Motor inductance, structural flexibility, nonlinear friction
+and pendulum longitudinal-axis inertia are neglected. The motor is direct
+drive. These are nominal modelling assumptions, not measurements of
+the particular laboratory unit.
+\begin{equation}
+x=\begin{bmatrix}\theta&\alpha&\dot\theta&\dot\alpha\end{bmatrix}^{T},
+\qquad u=V_m,\qquad y=\begin{bmatrix}\theta&\alpha\end{bmatrix}^{T}.
+\end{equation}
+Thus there are $n=4$ states, $m=1$ input and $p=2$ outputs. Velocities
+are states even though only the angles are directly measured.
+
+\textbf{Motor electrical dynamics.}
+Kirchhoff's voltage law and the motor relations give
+\begin{align}
+V_m&=R_mi_m+L_m\frac{di_m}{dt}+e_b,\\
+e_b&=k_m\dot\theta,\qquad \tau_m=k_ti_m.
+\end{align}
+Neglecting inductance,
+\begin{equation}\label{eq:motor}
+i_m=\frac{V_m-k_m\dot\theta}{R_m},\qquad
+\boxed{\tau_m=\frac{k_t}{R_m}V_m-\frac{k_tk_m}{R_m}\dot\theta.}
+\end{equation}
+Voltage generates torque and back emf reduces the current as speed rises.
+
+\textbf{Inertias and energy.}
+For a uniform rod, $dm=(m/L)\,dr$. The relevant inertias are
+\begin{align}
+J_{\mathrm{arm}}&=\int_0^{L_r}r^2\frac{m_r}{L_r}\,dr
+=\frac13m_rL_r^2,\qquad J_r=J_{\mathrm{arm}}+J_m+J_h,\\
+J_p&=\int_{-L_p/2}^{L_p/2}r^2\frac{m_p}{L_p}\,dr
+=\frac1{12}m_pL_p^2.
+\end{align}
+Here $J_r$ includes the arm, rotor and hub. The arm rod approximation
+excludes the separately added rotor and hub. No inertia-disc module is
+included. $J_p$ is about the pendulum centre of mass; the hinge inertia is
+$J_p+m_pl_p^2=\frac13m_pL_p^2$ by the parallel-axis theorem.
+
+The pendulum centre-of-mass position is
+\begin{equation}
+\boldsymbol r_p=L_r\boldsymbol e_r-l_p\sin\alpha\,\boldsymbol e_t
++l_p\cos\alpha\,\boldsymbol e_z.
+\end{equation}
+Using $\dot{\boldsymbol e}_r=\dot\theta\boldsymbol e_t$ and
+$\dot{\boldsymbol e}_t=-\dot\theta\boldsymbol e_r$ gives
+\begin{align}
+\dot{\boldsymbol r}_p&=l_p\sin\alpha\,\dot\theta\,\boldsymbol e_r
++(L_r\dot\theta-l_p\cos\alpha\,\dot\alpha)\boldsymbol e_t
+-l_p\sin\alpha\,\dot\alpha\,\boldsymbol e_z,\\
+\|\dot{\boldsymbol r}_p\|^2&=(L_r^2+l_p^2\sin^2\alpha)\dot\theta^2
++l_p^2\dot\alpha^2-2L_rl_p\cos\alpha\,\dot\theta\dot\alpha.
+\end{align}
+Neglecting longitudinal-axis inertia, pendulum rotation about its centre
+of mass contributes
+\[\frac12J_p(\dot\alpha^2+\sin^2\alpha\,\dot\theta^2).\]
+Therefore the total kinetic and potential energies are
+\begin{align}
+T&=\frac12J_r\dot\theta^2+\frac12m_p\|\dot{\boldsymbol r}_p\|^2
++\frac12J_p(\dot\alpha^2+\sin^2\alpha\,\dot\theta^2),\\
+U&=m_pgl_p\cos\alpha.
+\end{align}
+Potential energy is referenced to the hinge height and is maximal upright.
+
+Define
+\begin{equation}\label{eq:constants}
+a=J_r+m_pL_r^2,\quad b=J_p+m_pl_p^2,\quad
+c=m_pL_rl_p,\quad h=m_pgl_p.
+\end{equation}
+The Lagrangian is
+\begin{equation}\label{eq:lagrangian}
+\mathcal L=T-U=
+\frac12(a+b\sin^2\alpha)\dot\theta^2+\frac12b\dot\alpha^2
+-c\cos\alpha\,\dot\theta\dot\alpha-h\cos\alpha.
+\end{equation}
+
+\textbf{Euler--Lagrange equations.}
+For $q\in\{\theta,\alpha\}$,
+\begin{equation}
+\frac{d}{dt}\left(\frac{\partial\mathcal L}{\partial\dot q}\right)
+-\frac{\partial\mathcal L}{\partial q}=Q_q,\qquad
+Q_\theta=\tau_m-D_r\dot\theta,\quad Q_\alpha=-D_p\dot\alpha.
+\end{equation}
+The arm derivatives are
+\begin{align}
+\frac{\partial\mathcal L}{\partial\theta}&=0,\\
+\frac{\partial\mathcal L}{\partial\dot\theta}
+&=(a+b\sin^2\alpha)\dot\theta-c\cos\alpha\,\dot\alpha,\\
+\frac{d}{dt}\left(\frac{\partial\mathcal L}{\partial\dot\theta}\right)
+&=(a+b\sin^2\alpha)\ddot\theta
++2b\sin\alpha\cos\alpha\,\dot\alpha\dot\theta
+-c\cos\alpha\,\ddot\alpha+c\sin\alpha\,\dot\alpha^2.
+\end{align}
+The pendulum derivatives are
+\begin{align}
+\frac{\partial\mathcal L}{\partial\dot\alpha}
+&=b\dot\alpha-c\cos\alpha\,\dot\theta,\\
+\frac{d}{dt}\left(\frac{\partial\mathcal L}{\partial\dot\alpha}\right)
+&=b\ddot\alpha-c\cos\alpha\,\ddot\theta
++c\sin\alpha\,\dot\alpha\dot\theta,\\
+\frac{\partial\mathcal L}{\partial\alpha}
+&=b\sin\alpha\cos\alpha\,\dot\theta^2
++c\sin\alpha\,\dot\theta\dot\alpha+h\sin\alpha.
+\end{align}
+Define $k_v=k_t/R_m$ and $d=D_r+k_tk_m/R_m$. The resulting
+nonlinear mechanical equations, including motor torque, are
+\begin{samepage}
+\begin{subequations}\label{eq:eom}
+\begin{align}
+(a+b\sin^2\alpha)\ddot\theta-c\cos\alpha\,\ddot\alpha
++2b\sin\alpha\cos\alpha\,\dot\alpha\dot\theta
++c\sin\alpha\,\dot\alpha^2&=k_vu-d\dot\theta,\\
+-c\cos\alpha\,\ddot\theta+b\ddot\alpha
+-b\sin\alpha\cos\alpha\,\dot\theta^2-h\sin\alpha&=-D_p\dot\alpha.
+\end{align}
+\end{subequations}
+\end{samepage}
+Fixing the arm and neglecting friction gives $b\ddot\alpha=h\sin\alpha$.
+A small positive tilt therefore accelerates away from upright, which
+provides a physical check on the gravity sign.
+
+\textbf{Nonlinear state-space representation.}
+Define the torque expressions
+\begin{align}
+r_1(x,u)&=k_vu-dx_3-2b\sin x_2\cos x_2\,x_4x_3-c\sin x_2\,x_4^2,\\
+r_2(x,u)&=b\sin x_2\cos x_2\,x_3^2+h\sin x_2-D_px_4.
+\end{align}
+The equations of motion become
+\begin{equation}
+\underbrace{\begin{bmatrix}
+a+b\sin^2\alpha&-c\cos\alpha\\-c\cos\alpha&b
+\end{bmatrix}}_{M(\alpha)}
+\begin{bmatrix}\ddot\theta\\\ddot\alpha\end{bmatrix}
+=\begin{bmatrix}r_1\\r_2\end{bmatrix}.
+\end{equation}
+The mass-matrix determinant and inverse are
+\begin{align}
+\Delta(\alpha)&=b(a+b\sin^2\alpha)-c^2\cos^2\alpha,\\
+M^{-1}(\alpha)&=\frac1{\Delta(\alpha)}
+\begin{bmatrix}b&c\cos\alpha\\c\cos\alpha&a+b\sin^2\alpha\end{bmatrix}.
+\end{align}
+Hence
+\begin{equation}\label{eq:nonlinear_ss}
+\boxed{\dot x=f(x,u)=
+\begin{bmatrix}
+x_3\\x_4\\
+(br_1+c\cos x_2\,r_2)/\Delta(x_2)\\
+(c\cos x_2\,r_1+(a+b\sin^2x_2)r_2)/\Delta(x_2)
+\end{bmatrix}.}
+\end{equation}
+For the parameters in Section~\ref{sec:model}, $ab-c^2>0$ and
+$\Delta(\alpha)=(ab-c^2)+(b^2+c^2)\sin^2\alpha>0$, so this idealised
+model is nonsingular for every pendulum angle.
+
+\textbf{Equilibrium and Jacobian linearisation.}
+An upright stationary equilibrium is
+\begin{equation}
+x_e=\begin{bmatrix}\theta_e&0&0&0\end{bmatrix}^{T},\qquad u_e=0.
+\end{equation}
+Any fixed $\theta_e$ is an ideal equilibrium, since no restoring torque
+depends on arm angle. Choose $\theta_e=0$ for the numerical model.
+Define $\delta x=x-x_e$, $\delta u=u-u_e$ and $\delta y=y-y_e$.
+The first-order Taylor expansion is
+\begin{equation}\label{eq:ct_ss}
+\delta\dot x=A_c\delta x+B_c\delta u,\qquad
+\delta y=C_c\delta x+D_c\delta u,
+\end{equation}
+with Jacobians
+\begin{equation}
+A_c=\left.\frac{\partial f}{\partial x}\right|_e,\qquad
+B_c=\left.\frac{\partial f}{\partial u}\right|_e.
+\end{equation}
+At equilibrium, $r_1=r_2=0$ and $\Delta_0=ab-c^2$. Also,
+\begin{equation}
+\left.\frac{\partial(r_1,r_2)}{\partial x}\right|_e
+=\begin{bmatrix}0&0&-d&0\\0&h&0&-D_p\end{bmatrix},\qquad
+\left.\frac{\partial(r_1,r_2)}{\partial u}\right|_e
+=\begin{bmatrix}k_v\\0\end{bmatrix}.
+\end{equation}
+Derivatives of $M^{-1}$ multiply the zero equilibrium torque vector.
+Multiplying the above derivatives by
+$M^{-1}(0)=\Delta_0^{-1}\begin{bmatrix}b&c\\c&a\end{bmatrix}$ gives
+\begin{equation}\label{eq:Ac_symbolic}
+\boxed{A_c=
+\begin{bmatrix}
+0&0&1&0\\0&0&0&1\\
+0&ch/\Delta_0&-bd/\Delta_0&-cD_p/\Delta_0\\
+0&ah/\Delta_0&-cd/\Delta_0&-aD_p/\Delta_0
+\end{bmatrix},\quad
+B_c=\begin{bmatrix}0\\0\\bk_v/\Delta_0\\ck_v/\Delta_0\end{bmatrix}.}
+\end{equation}
+Since the outputs are the two angles with no direct voltage feedthrough,
+\begin{equation}\label{eq:CD}
+\boxed{C_c=\begin{bmatrix}1&0&0&0\\0&1&0&0\end{bmatrix},
+\qquad D_c=\begin{bmatrix}0\\0\end{bmatrix}.}
+\end{equation}
+This linearisation describes small deviations about upright; large-angle
+motion requires the nonlinear model in~\eqref{eq:nonlinear_ss}.
+
+\subsection{System parameters}
+
+Table~\ref{tab:params} lists the manufacturer-supplied parameters relevant
+to the pendulum configuration. The inertia-disc parameters are excluded.
+Motor inductance is listed to justify its neglect, rather than being
+retained as a model state.
+\begin{table}[H]\centering
+\caption{Parameters from Table 2.2 of the QUBE-Servo 2 user manual~\cite{qube_manual}.}
+\label{tab:params}
+\begin{tabular}{lll}
+\toprule
+\textbf{Symbol}&\textbf{Description}&\textbf{Value}\\
+\midrule
+$R_m$&Motor resistance&$8.4~\Omega$\\
+$k_t$&Torque constant&$0.042~\mathrm{N\,m/A}$\\
+$k_m$&Back-emf constant&$0.042~\mathrm{V\,s/rad}$\\
+$J_m$&Motor rotor inertia&$4.0\times10^{-6}~\mathrm{kg\,m^2}$\\
+$J_h$&Attachment hub inertia&$0.6\times10^{-6}~\mathrm{kg\,m^2}$\\
+$L_m$&Inductance (neglected)&$1.16\times10^{-3}~\mathrm H$\\
+$m_r$&Arm mass&$0.095~\mathrm{kg}$\\
+$L_r$&Arm length, motor pivot to tip&$0.085~\mathrm m$\\
+$m_p$&Pendulum mass&$0.024~\mathrm{kg}$\\
+$L_p$&Pendulum full length&$0.129~\mathrm m$\\
+&Encoder resolution (quadrature)&$2\pi/2048~\mathrm{rad/count}$\\
+&Recommended amplifier output&$\pm10~\mathrm V$\\
+\bottomrule
+\end{tabular}
+\end{table}
+The motor electrical time constant is
+\begin{equation}
+\tau_{\mathrm{elec}}=\frac{L_m}{R_m}
+=\frac{1.16\times10^{-3}}{8.4}
+=1.3810\times10^{-4}~\mathrm s.
+\end{equation}
+This is short compared with the mechanical time scales, motivating the
+quasi-static current approximation. Retaining inductance would introduce
+motor current as a fifth state.
+
+The damping values in Table~\ref{tab:additional} are adopted from the
+manufacturer's student workbook, \emph{Pendulum State-Space Model}, in-lab
+exercise 6~\cite{qube_courseware}. That source reports them as experimentally
+obtained example values; they were not identified from this group's
+specific laboratory unit. No new experimental identification is claimed.
+\begin{table}[H]\centering
+\caption{Additional constants and their provenance.}
+\label{tab:additional}
+\begin{tabular}{llll}
+\toprule
+\textbf{Symbol}&\textbf{Description}&\textbf{Value}&\textbf{Basis}\\
+\midrule
+$D_r$&Arm damping&$0.0015~\mathrm{N\,m\,s/rad}$&Workbook example\\
+$D_p$&Pendulum damping&$0.0005~\mathrm{N\,m\,s/rad}$&Workbook example\\
+$g$&Gravity&$9.81~\mathrm{m/s^2}$&Standard approximation\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{samepage}
+The derived dimensions and inertias are
+\begin{align}
+l_p&=L_p/2=0.0645~\mathrm m,\\
+J_{\mathrm{arm}}&=\tfrac13(0.095)(0.085)^2
+=2.2879167\times10^{-4}~\mathrm{kg\,m^2},\\
+J_r&=J_{\mathrm{arm}}+4.0\times10^{-6}+0.6\times10^{-6}
+=2.3339167\times10^{-4}~\mathrm{kg\,m^2},\\
+J_p&=\tfrac1{12}(0.024)(0.129)^2
+=3.3282\times10^{-5}~\mathrm{kg\,m^2}.
+\end{align}
+\end{samepage}
+The constants used in the matrices are
+\begin{align}
+a&=4.0679167\times10^{-4}~\mathrm{kg\,m^2},&
+b&=1.33128\times10^{-4}~\mathrm{kg\,m^2},\\
+c&=1.3158\times10^{-4}~\mathrm{kg\,m^2},&
+h&=0.01518588~\mathrm{N\,m},\\
+d&=0.00171~\mathrm{N\,m\,s/rad},&
+k_v&=0.005~\mathrm{N\,m/V},\\
+\Delta_0&=3.68420646\times10^{-8}~\mathrm{kg^2\,m^4}.&&
+\end{align}
+Substituting into~\eqref{eq:Ac_symbolic} gives
+\begin{equation}\label{eq:Ac_numeric}
+A_c\simeq
+\begin{bmatrix}
+0&0&1&0\\0&0&0&1\\
+0&54.2357795&-6.17904785&-1.78573054\\
+0&167.674898&-6.10719845&-5.52075014
+\end{bmatrix},\quad
+B_c\simeq\begin{bmatrix}0\\0\\18.0673914\\17.8573054\end{bmatrix}.
+\end{equation}
+The matrices $C_c,D_c$ remain exactly those in~\eqref{eq:CD}.
+These are nominal simulation parameters. Actual mass distribution, damping,
+encoder calibration and unmodelled friction may produce differences from
+hardware measurements.
+
+\subsection{Discretisation and sampling time}
+
+Choose the sampling time
+\begin{equation}
+\boxed{T_s=0.001~\mathrm s,\qquad f_s=1/T_s=1000~\mathrm{Hz}.}
+\end{equation}
+This matches the value in the supplied ControLab template's
+\texttt{Hardware\_settings.m}~\cite{hardware_template}. It is also short
+relative to the mechanical dynamics, since
+$T_s\max_i|\lambda_i(A_c)|\simeq0.01763\ll1$ for this model. Hardware execution timing
+and achieved closed-loop performance must still be checked during
+implementation.
+
+Zero-order hold (ZOH) assumes that motor voltage is held constant between
+controller updates. The exact discretisation of the linearised model
+under this assumption is
+\begin{equation}\label{eq:zoh}
+A=e^{A_cT_s},\qquad
+B=\int_0^{T_s}e^{A_c\tau}B_c\,d\tau,\qquad C=C_c,\quad D=D_c.
+\end{equation}
+The MATLAB function \texttt{c2d} evaluates these expressions without
+requiring an inverse of $A_c$. This matters because the arm-position mode
+makes $A_c$ singular.
+The discrete-time model is
+\begin{subequations}\label{eq:dt_ss}
+\begin{align}
+\delta x[k+1]&=A\delta x[k]+B\delta u[k],\\
+\delta y[k]&=C\delta x[k]+D\delta u[k].
+\end{align}
+\end{subequations}
+At the chosen zero equilibrium the deviation variables equal the
+original variables. The calculated matrices are
+\begin{equation}\label{eq:A_discrete}
+A\simeq
+\begin{bmatrix}
+1&2.70127657\!\times\!10^{-5}&9.96918625\!\times\!10^{-4}&-8.80391044\!\times\!10^{-7}\\
+0&1.00008362958&-3.04176177\!\times\!10^{-6}&9.97274363\!\times\!10^{-4}\\
+0&0.05392103923&0.99384536883&-0.00174835485\\
+0&0.16705290505&-0.00607175726&0.99458335877
+\end{bmatrix},
+\end{equation}
+\begin{equation}
+B\simeq\begin{bmatrix}
+9.00986699\times10^{-6}\\8.89404027\times10^{-6}\\
+0.0179959975588\\0.0177536761881
+\end{bmatrix},\quad
+C=\begin{bmatrix}1&0&0&0\\0&1&0&0\end{bmatrix},\quad
+D=\begin{bmatrix}0\\0\end{bmatrix}.
+\end{equation}
+The dimensions are $A\in\mathbb R^{4\times4}$,
+$B\in\mathbb R^{4\times1}$, $C\in\mathbb R^{2\times4}$ and
+$D\in\mathbb R^{2\times1}$. Displayed results are rounded;
+full precision must be retained in MATLAB for controller and observer
+design.
+
