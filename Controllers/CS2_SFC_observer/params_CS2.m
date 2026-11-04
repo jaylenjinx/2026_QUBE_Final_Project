@@ -14,6 +14,31 @@ qube_model;                         % plant constants, Ac..Dc, A..D, ts
 %   DP2 poles, for reference: ps = [-1.5+2i, -1.5-2i, -6, -8];
 wn   = 8;                           % dominant natural frequency [rad/s]
 zeta = 0.7;                         % dominant damping
+
+%% New control targets (for changes asked for in the demo)
+% Leave empty to keep wn and zeta above. A target recomputes them from the
+% second-order relations, and the faster poles and observer poles follow:
+%   zeta = -ln(OS/100)/sqrt(pi^2 + ln(OS/100)^2),   wn = 4/(zeta*ts)
+% These are design estimates: check the result with run_CS2. Going much slower
+% than wn = 6 leaves little margin for the weaker real motor. The reference
+% filter below also takes about 4*ref_tau (0.8 s) to settle, so for a settling
+% target under about 1 s, shorten ref_tau as well.
+% Examples (45 deg step, nonlinear sim): OS 10 %, ts 2 s -> 7.0 %, 1.82 s, but
+% stable only for motor gain >= 0.81x; OS 5 %, ts 0.5 s -> 0.5 %, 0.95 s.
+OS_target = [];                     % overshoot target [%], e.g. 10
+ts_target = [];                     % 2 % settling-time target [s], e.g. 2
+if ~isempty(OS_target)
+    zeta = -log(OS_target/100)/sqrt(pi^2 + log(OS_target/100)^2);
+end
+if ~isempty(ts_target)
+    wn = 4/(zeta*ts_target);
+end
+if wn < 6
+    warning('params_CS2:slow', ['wn = %.2f rad/s is slower than the hardware-tested design ' ...
+        '(wn = 8). Expect a smaller margin for the weaker real motor: check the motor-gain ' ...
+        'range printed by run_CS2. A settling-time limit is met by any faster design too.'], wn);
+end
+
 ps = [-zeta*wn + 1i*wn*sqrt(1-zeta^2), -zeta*wn - 1i*wn*sqrt(1-zeta^2), ...
       -2.4*wn, -3.2*wn];            % continuous-time SFC poles [1/s]
 
@@ -45,7 +70,7 @@ pz = exp(ps*ts);                    % discrete-time SFC poles, z = e^(s Ts)
 % Faster observers pass more encoder quantisation noise into the velocity
 % estimates (more voltage chatter).
 %   DP2 observer poles, for reference: po_s = [-40, -45, -50, -55];
-po_s = [-90, -95, -100, -105];      % continuous-time observer poles [1/s]
+po_s = [-90, -95, -100, -105]*(wn/8);  % observer poles [1/s], scaled with the SFC bandwidth
 po_z = exp(po_s*ts);
 Lo   = place(A', C', po_z)';
 

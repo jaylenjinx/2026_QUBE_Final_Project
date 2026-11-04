@@ -102,6 +102,15 @@ settings:
 
 1. To change the design, edit `params_CS2.m`: `wn`, `zeta`, `p_int`, `int_band`, `ref_tau`,
    `po_s`, or `use_integral`. The gains are recomputed with `place`.
+   **For new targets asked for in the demo,** set `OS_target` [%] and `ts_target` [s]
+   instead. They set `zeta` and `wn` from the second-order relations, and the faster SFC
+   poles and the observer poles scale with them. `run_CS2` prints the resulting poles, gains
+   and motor-gain margin.
+   - A slower settling target gives a slower, less robust design. For example, 10 % and 2 s
+     only stays stable for a motor gain of 0.81× or more. A settling-time limit is also met by
+     any faster design, so keeping the tested one is a valid answer.
+   - For a settling target under about 1 s, also shorten `ref_tau`, because the reference
+     filter alone takes about 4·`ref_tau` to settle.
 2. Run `run_CS2`.
 3. On the hardware, open `hw_CS2.slx` from this folder and run it in external mode. Its
    `InitFcn` runs `params_CS2.m`, so the hardware uses the same gains as the simulation.
