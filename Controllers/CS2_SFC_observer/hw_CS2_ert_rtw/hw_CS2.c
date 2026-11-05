@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'hw_CS2'.
  *
- * Model version                  : 3.50
+ * Model version                  : 3.51
  * Simulink Coder version         : 25.2 (R2025b) 28-Jul-2025
- * C/C++ source code generated on : Fri Oct 23 14:57:32 2026
+ * C/C++ source code generated on : Wed Nov  4 19:54:46 2026
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -306,7 +306,6 @@ void hw_CS2_step0(void)                /* Sample time: [0.0s, 0.0s] */
   /* RateTransition generated from: '<S11>/Controller CS2' incorporates:
    *  Constant: '<Root>/theta ref [deg]'
    *  Gain: '<S12>/Gain1'
-   *  Gain: '<S1>/Gain'
    *  Logic: '<S10>/Logical Operator1'
    *  Product: '<S14>/Product4'
    *  Product: '<S8>/Product4'
@@ -317,14 +316,13 @@ void hw_CS2_step0(void)                /* Sample time: [0.0s, 0.0s] */
     hw_CS2_DW.x_ref_Buffer = hw_CS2_P.Gain1_Gain * hw_CS2_P.thetarefdeg_Value *
       (real_T)rtb_LogicalOperator;
     hw_CS2_DW.TmpRTBAtControllerCS2Inport3_Bu = hw_CS2_B.alpha * (real_T)
-      rtb_LogicalOperator * hw_CS2_P.Gain_Gain;
+      rtb_LogicalOperator;
     hw_CS2_DW.TmpRTBAtControllerCS2Inport4_Bu = !rtb_LogicalOperator;
     hw_CS2_DW.xc_Buffer = hw_CS2_B.Memory * (real_T)rtb_LogicalOperator;
 
     /* RateTransition generated from: '<S13>/Product4' incorporates:
      *  Constant: '<Root>/theta ref [deg]'
      *  Gain: '<S12>/Gain1'
-     *  Gain: '<S1>/Gain'
      *  Logic: '<S10>/Logical Operator1'
      *  Product: '<S14>/Product4'
      *  Product: '<S8>/Product4'
@@ -467,7 +465,7 @@ void hw_CS2_step0(void)                /* Sample time: [0.0s, 0.0s] */
     memcpy((void *)&motor, (void *)&x, (size_t)1 * sizeof(uint16_T));
     hw_CS2_B.data_out[15] = (uint8_T)(motor >> 8);
     hw_CS2_B.data_out[16] = (uint8_T)(motor & 255U);
-    if ((!(hw_CS2_P.MotorEnable_Value != 0.0)) || (!(fabs(hw_CS2_P.Gain_Gain_f *
+    if ((!(hw_CS2_P.MotorEnable_Value != 0.0)) || (!(fabs(hw_CS2_P.Gain_Gain *
            hw_CS2_B.alpha * hw_CS2_P.Protection_Value) <
           hw_CS2_P.CompareToConstant_const))) {
       hw_CS2_B.data_out[2] = 31U;
@@ -599,7 +597,7 @@ void hw_CS2_step0(void)                /* Sample time: [0.0s, 0.0s] */
   hw_CS2_B.alpha_rad = hw_CS2_B.encoder1 * 0.0030679615757712823;
 
   /* MATLAB Function: '<S7>/theta' */
-  hw_CS2_B.theta_rad = -hw_CS2_B.encoder0 * 0.0030679615757712823;
+  hw_CS2_B.theta_rad = hw_CS2_B.encoder0 * 0.0030679615757712823;
 
   /* Gain: '<S3>/Gain' */
   hw_CS2_B.Gain = hw_CS2_P.Gain_Gain_d * hw_CS2_B.alpha;
@@ -637,12 +635,12 @@ void hw_CS2_step0(void)                /* Sample time: [0.0s, 0.0s] */
 /* Model step function for TID2 */
 void hw_CS2_step2(void)                /* Sample time: [0.001s, 0.0s] */
 {
+  real_T dxi;
+  real_T e;
   real_T rtb_u;
   real_T tmp;
+  real_T u_unlimited;
   real_T xh;
-  real_T xh_0;
-  real_T xh_1;
-  real_T xh_2;
   int32_T i;
   int32_T tmp_0;
   boolean_T reset_in;
@@ -652,15 +650,15 @@ void hw_CS2_step2(void)                /* Sample time: [0.001s, 0.0s] */
    *  Constant: '<S4>/Reset_manual 1'
    */
   if (hw_CS2_P.SensorsReset_CurrentSetting == 1) {
-    xh = hw_CS2_P.Reset_manual1_Value_ly;
+    u_unlimited = hw_CS2_P.Reset_manual1_Value_ly;
   } else {
-    xh = hw_CS2_P.Reset_manual0_Value_b;
+    u_unlimited = hw_CS2_P.Reset_manual0_Value_b;
   }
 
   /* MATLAB Function: '<S7>/Toogle Reset' incorporates:
    *  ManualSwitch: '<Root>/Sensors Reset'
    */
-  reset_in = (xh > 0.5);
+  reset_in = (u_unlimited > 0.5);
 
   /* RateTransition generated from: '<S7>/Toogle Reset' incorporates:
    *  MATLAB Function: '<S7>/Toogle Reset'
@@ -680,20 +678,32 @@ void hw_CS2_step2(void)                /* Sample time: [0.001s, 0.0s] */
    *  RateTransition generated from: '<S11>/Controller CS2'
    */
   hw_CS2_B.y[0] = hw_CS2_DW.xc_Buffer;
-  hw_CS2_B.y[1] = hw_CS2_DW.TmpRTBAtControllerCS2Inport3_Bu;
+  hw_CS2_B.y[1] = -hw_CS2_DW.TmpRTBAtControllerCS2Inport3_Bu;
   if ((!hw_CS2_DW.xh_not_empty) || hw_CS2_DW.TmpRTBAtControllerCS2Inport4_Bu) {
     hw_CS2_DW.xh[0] = hw_CS2_DW.xc_Buffer + hw_CS2_P.xhat0_offset[0];
-    hw_CS2_DW.xh[1] = hw_CS2_DW.TmpRTBAtControllerCS2Inport3_Bu +
+    hw_CS2_DW.xh[1] = -hw_CS2_DW.TmpRTBAtControllerCS2Inport3_Bu +
       hw_CS2_P.xhat0_offset[1];
     hw_CS2_DW.xh[2] = hw_CS2_P.xhat0_offset[2];
     hw_CS2_DW.xh[3] = hw_CS2_P.xhat0_offset[3];
     hw_CS2_DW.xh_not_empty = true;
+    hw_CS2_DW.xi = 0.0;
+    hw_CS2_DW.rf = hw_CS2_DW.xc_Buffer;
   }
 
-  rtb_u = (((hw_CS2_DW.xh[0] - hw_CS2_DW.x_ref_Buffer) * -hw_CS2_P.F[0] +
-            -hw_CS2_P.F[1] * hw_CS2_DW.xh[1]) + -hw_CS2_P.F[2] * hw_CS2_DW.xh[2])
-    + -hw_CS2_P.F[3] * hw_CS2_DW.xh[3];
-  if ((!(rtb_u >= -hw_CS2_P.u_max)) && (!rtIsNaN(-hw_CS2_P.u_max))) {
+  if (hw_CS2_P.ref_tau > 0.0) {
+    hw_CS2_DW.rf += hw_CS2_P.ts / hw_CS2_P.ref_tau * (hw_CS2_DW.x_ref_Buffer -
+      hw_CS2_DW.rf);
+  } else {
+    hw_CS2_DW.rf = hw_CS2_DW.x_ref_Buffer;
+  }
+
+  u_unlimited = ((((hw_CS2_DW.xh[0] - hw_CS2_DW.rf) * -hw_CS2_P.F[0] +
+                   -hw_CS2_P.F[1] * hw_CS2_DW.xh[1]) + -hw_CS2_P.F[2] *
+                  hw_CS2_DW.xh[2]) + -hw_CS2_P.F[3] * hw_CS2_DW.xh[3]) -
+    hw_CS2_P.Fi * hw_CS2_DW.xi;
+  if ((u_unlimited >= -hw_CS2_P.u_max) || rtIsNaN(-hw_CS2_P.u_max)) {
+    rtb_u = u_unlimited;
+  } else {
     rtb_u = -hw_CS2_P.u_max;
   }
 
@@ -705,42 +715,51 @@ void hw_CS2_step2(void)                /* Sample time: [0.001s, 0.0s] */
     rtb_u = 0.0;
   }
 
-  xh = hw_CS2_DW.xh[1];
-  xh_0 = hw_CS2_DW.xh[0];
-  xh_1 = hw_CS2_DW.xh[2];
-  xh_2 = hw_CS2_DW.xh[3];
-  for (i = 0; i < 2; i++) {
-    hw_CS2_B.y_m[i] = hw_CS2_B.y[i] - (((hw_CS2_P.C[i + 2] * xh + hw_CS2_P.C[i] *
-      xh_0) + hw_CS2_P.C[i + 4] * xh_1) + hw_CS2_P.C[i + 6] * xh_2);
+  e = hw_CS2_DW.xc_Buffer - hw_CS2_DW.x_ref_Buffer;
+  dxi = hw_CS2_P.ts * e;
+  if ((fabs(e) <= hw_CS2_P.int_band) && (((!(u_unlimited > hw_CS2_P.u_max)) || (
+         !(-hw_CS2_P.Fi * dxi > 0.0))) && ((!(u_unlimited < -hw_CS2_P.u_max)) ||
+        (!(-hw_CS2_P.Fi * dxi < 0.0))) &&
+       (!hw_CS2_DW.TmpRTBAtControllerCS2Inport4_Bu))) {
+    hw_CS2_DW.xi += dxi;
   }
 
-  xh = hw_CS2_DW.xh[1];
-  xh_0 = hw_CS2_DW.xh[0];
-  xh_1 = hw_CS2_DW.xh[2];
-  xh_2 = hw_CS2_DW.xh[3];
+  u_unlimited = hw_CS2_DW.xh[1];
+  e = hw_CS2_DW.xh[0];
+  dxi = hw_CS2_DW.xh[2];
+  xh = hw_CS2_DW.xh[3];
+  for (i = 0; i < 2; i++) {
+    hw_CS2_B.y_m[i] = hw_CS2_B.y[i] - (((hw_CS2_P.C[i + 2] * u_unlimited +
+      hw_CS2_P.C[i] * e) + hw_CS2_P.C[i + 4] * dxi) + hw_CS2_P.C[i + 6] * xh);
+  }
+
+  u_unlimited = hw_CS2_DW.xh[1];
+  e = hw_CS2_DW.xh[0];
+  dxi = hw_CS2_DW.xh[2];
+  xh = hw_CS2_DW.xh[3];
   for (i = 0; i < 4; i++) {
-    hw_CS2_B.dv[i] = (((hw_CS2_P.A[i + 4] * xh + hw_CS2_P.A[i] * xh_0) +
-                       hw_CS2_P.A[i + 8] * xh_1) + hw_CS2_P.A[i + 12] * xh_2) +
+    hw_CS2_B.dv[i] = (((hw_CS2_P.A[i + 4] * u_unlimited + hw_CS2_P.A[i] * e) +
+                       hw_CS2_P.A[i + 8] * dxi) + hw_CS2_P.A[i + 12] * xh) +
       hw_CS2_P.B[i] * rtb_u;
   }
 
+  u_unlimited = 0.0;
+  e = 0.0;
+  dxi = 0.0;
   xh = 0.0;
-  xh_0 = 0.0;
-  xh_1 = 0.0;
-  xh_2 = 0.0;
   for (i = 0; i < 2; i++) {
     tmp = hw_CS2_B.y_m[i];
     tmp_0 = i << 2;
-    xh += hw_CS2_P.Lo[tmp_0] * tmp;
-    xh_0 += hw_CS2_P.Lo[tmp_0 + 1] * tmp;
-    xh_1 += hw_CS2_P.Lo[tmp_0 + 2] * tmp;
-    xh_2 += hw_CS2_P.Lo[tmp_0 + 3] * tmp;
+    u_unlimited += hw_CS2_P.Lo[tmp_0] * tmp;
+    e += hw_CS2_P.Lo[tmp_0 + 1] * tmp;
+    dxi += hw_CS2_P.Lo[tmp_0 + 2] * tmp;
+    xh += hw_CS2_P.Lo[tmp_0 + 3] * tmp;
   }
 
-  hw_CS2_DW.xh[0] = hw_CS2_B.dv[0] + xh;
-  hw_CS2_DW.xh[1] = hw_CS2_B.dv[1] + xh_0;
-  hw_CS2_DW.xh[2] = hw_CS2_B.dv[2] + xh_1;
-  hw_CS2_DW.xh[3] = hw_CS2_B.dv[3] + xh_2;
+  hw_CS2_DW.xh[0] = hw_CS2_B.dv[0] + u_unlimited;
+  hw_CS2_DW.xh[1] = hw_CS2_B.dv[1] + e;
+  hw_CS2_DW.xh[2] = hw_CS2_B.dv[2] + dxi;
+  hw_CS2_DW.xh[3] = hw_CS2_B.dv[3] + xh;
 
   /* Saturate: '<S1>/Saturation' incorporates:
    *  MATLAB Function: '<S11>/Controller CS2'
@@ -793,10 +812,10 @@ void hw_CS2_initialize(void)
   hw_CS2_M->Timing.stepSize0 = 0.0005;
 
   /* External mode info */
-  hw_CS2_M->Sizes.checksums[0] = (3695195027U);
-  hw_CS2_M->Sizes.checksums[1] = (1518087470U);
-  hw_CS2_M->Sizes.checksums[2] = (818588064U);
-  hw_CS2_M->Sizes.checksums[3] = (3203095937U);
+  hw_CS2_M->Sizes.checksums[0] = (4257453652U);
+  hw_CS2_M->Sizes.checksums[1] = (1162776800U);
+  hw_CS2_M->Sizes.checksums[2] = (4253895777U);
+  hw_CS2_M->Sizes.checksums[3] = (971089576U);
 
   {
     static const sysRanDType rtAlwaysEnabled = SUBSYS_RAN_BC_ENABLE;

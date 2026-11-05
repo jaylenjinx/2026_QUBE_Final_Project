@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'hw_CS1A'.
  *
- * Model version                  : 3.47
+ * Model version                  : 3.48
  * Simulink Coder version         : 25.2 (R2025b) 28-Jul-2025
- * C/C++ source code generated on : Fri Oct 30 11:39:50 2026
+ * C/C++ source code generated on : Wed Nov  4 20:02:17 2026
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -121,7 +121,7 @@ typedef struct {
   real_T xc_Buffer;                    /* synthesized block */
   real_T u_Buffer0;                    /* synthesized block */
   real_T wF[2];                        /* '<S11>/Controller CS1A' */
-  real_T wT;                           /* '<S11>/Controller CS1A' */
+  real_T wT[2];                        /* '<S11>/Controller CS1A' */
   real_T wA;                           /* '<S11>/Controller CS1A' */
   int32_T clockTickCounter;            /* '<S7>/Pulse Generator1' */
   int8_T QS2_SubsysRanBC;              /* '<S7>/QS2' */
@@ -153,7 +153,7 @@ struct P_hw_CS1A_T_ {
   real_T aF[3];                        /* Variable: aF
                                         * Referenced by: '<S11>/Controller CS1A'
                                         */
-  real_T aT[2];                        /* Variable: aT
+  real_T aT[3];                        /* Variable: aT
                                         * Referenced by: '<S11>/Controller CS1A'
                                         */
   real_T bA[2];                        /* Variable: bA
@@ -162,7 +162,7 @@ struct P_hw_CS1A_T_ {
   real_T bF[3];                        /* Variable: bF
                                         * Referenced by: '<S11>/Controller CS1A'
                                         */
-  real_T bT[2];                        /* Variable: bT
+  real_T bT[3];                        /* Variable: bT
                                         * Referenced by: '<S11>/Controller CS1A'
                                         */
   real_T ts;                           /* Variable: ts
@@ -260,7 +260,7 @@ struct P_hw_CS1A_T_ {
   real_T Step1_YFinal;                 /* Expression: -1
                                         * Referenced by: '<S7>/Step1'
                                         */
-  real_T MotorEnable_Value;            /* Expression: 1
+  real_T MotorEnable_Value;            /* Expression: 0
                                         * Referenced by: '<Root>/Motor Enable'
                                         */
   real_T Protection_Value;             /* Expression: 1

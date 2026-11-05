@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'hw_CS1A'.
  *
- * Model version                  : 3.47
+ * Model version                  : 3.48
  * Simulink Coder version         : 25.2 (R2025b) 28-Jul-2025
- * C/C++ source code generated on : Fri Oct 30 11:39:50 2026
+ * C/C++ source code generated on : Wed Nov  4 20:02:17 2026
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -34,7 +34,7 @@ P_hw_CS1A_T hw_CS1A_P = {
   /* Variable: aT
    * Referenced by: '<S11>/Controller CS1A'
    */
-  { 1.0, -0.941747572815534 },
+  { 1.0, -1.941747572815534, 0.941747572815534 },
 
   /* Variable: bA
    * Referenced by: '<S11>/Controller CS1A'
@@ -49,7 +49,7 @@ P_hw_CS1A_T hw_CS1A_P = {
   /* Variable: bT
    * Referenced by: '<S11>/Controller CS1A'
    */
-  { -104.43796178261466, 104.20530699213815 },
+  { -104.46649758165854, 208.6480566103514, -104.18167535878993 },
 
   /* Variable: ts
    * Referenced by:
@@ -208,10 +208,10 @@ P_hw_CS1A_T hw_CS1A_P = {
    */
   -1.0,
 
-  /* Expression: 1
+  /* Expression: 0
    * Referenced by: '<Root>/Motor Enable'
    */
-  1.0,
+  0.0,
 
   /* Expression: 1
    * Referenced by: '<Root>/Protection'
@@ -276,7 +276,7 @@ P_hw_CS1A_T hw_CS1A_P = {
   /* Computed Parameter: ControllerEnable_CurrentSetti_e
    * Referenced by: '<Root>/Controller Enable'
    */
-  1U,
+  0U,
 
   /* Computed Parameter: STOPSimulation_CurrentSetting
    * Referenced by: '<Root>/STOP Simulation'
@@ -286,7 +286,7 @@ P_hw_CS1A_T hw_CS1A_P = {
   /* Computed Parameter: SensorsReset_CurrentSetting
    * Referenced by: '<Root>/Sensors Reset'
    */
-  0U
+  1U
 };
 
 /*
