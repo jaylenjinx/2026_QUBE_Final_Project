@@ -76,6 +76,7 @@ Lo   = place(A', C', po_z)';
 
 xhat0_offset = [0; 0; 0; 0];        % extra initial estimation error (simulation only)
 u_max = 10;                         % QUBE-Servo 2 amplifier limit [V]
+alpha_sign = 1;                     % pendulum encoder direction: +1 in simulation, -1 on the QUBE (Hardware_settings.m)
 
 %% Simulation settings (run_CS2.m)
 % 45 deg, as for the CS1.A hardware benchmark: its +/-2 % band (0.9 deg) is

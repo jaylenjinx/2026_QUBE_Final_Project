@@ -18,3 +18,5 @@ save_data = false;  % true:  save data
 %% Add your own fixed variable here
 % Controller parameters: the same design file as the simulation
 run('params_CS2.m');
+% The QUBE's pendulum encoder counts alpha opposite to the model's convention
+alpha_sign = -1;

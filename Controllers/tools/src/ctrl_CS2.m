@@ -1,4 +1,4 @@
-function [u, x_hat] = controller(r, theta, alpha, reset, F, Fi, Lo, A, B, C, ts, ref_tau, int_band, xhat0_offset, u_max)
+function [u, x_hat] = controller(r, theta, alpha, reset, F, Fi, Lo, A, B, C, ts, ref_tau, int_band, xhat0_offset, u_max, alpha_sign)
 %CONTROLLER Discrete-time SFC with integral action and a Luenberger observer (CS2).
 % Every stage of the control system is in this one block (Task 5 rule):
 %   1. Reference filter:  r_f(k+1) = r_f(k) + ts/ref_tau (r - r_f(k)),  x* = [r_f; 0; 0; 0], u* = 0
@@ -14,7 +14,11 @@ function [u, x_hat] = controller(r, theta, alpha, reset, F, Fi, Lo, A, B, C, ts,
 % Set Fi = 0 to run without integral action, or ref_tau = 0 to skip the filter.
 % Inputs: r, theta, alpha in rad; reset = 1 (controller disabled) restarts all
 % states and holds u at 0. Outputs: u, the motor voltage Vm in V; x_hat.
+% alpha_sign corrects the pendulum encoder's direction: +1 in simulation (the
+% plant models use the model convention), -1 on the QUBE (set in Hardware_settings.m).
 %#codegen
+
+alpha = alpha_sign*alpha;
 
 persistent xh xi rf
 y = [theta; alpha];
