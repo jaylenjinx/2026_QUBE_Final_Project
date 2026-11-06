@@ -7,9 +7,9 @@
  *
  * Code generation for model "hw_CS1A".
  *
- * Model version              : 3.47
+ * Model version              : 3.48
  * Simulink Coder version : 25.2 (R2025b) 28-Jul-2025
- * C source code generated on : Fri Oct 30 11:39:50 2026
+ * C source code generated on : Wed Nov  4 20:02:17 2026
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex

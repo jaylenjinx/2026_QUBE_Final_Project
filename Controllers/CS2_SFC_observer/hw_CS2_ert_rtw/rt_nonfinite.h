@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'hw_CS2'.
  *
- * Model version                  : 3.50
+ * Model version                  : 3.51
  * Simulink Coder version         : 25.2 (R2025b) 28-Jul-2025
- * C/C++ source code generated on : Fri Oct 23 14:57:32 2026
+ * C/C++ source code generated on : Wed Nov  4 19:54:46 2026
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex

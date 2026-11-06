@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'hw_CS2'.
  *
- * Model version                  : 3.50
+ * Model version                  : 3.51
  * Simulink Coder version         : 25.2 (R2025b) 28-Jul-2025
- * C/C++ source code generated on : Fri Oct 23 14:57:32 2026
+ * C/C++ source code generated on : Wed Nov  4 19:54:46 2026
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -44,20 +44,36 @@ P_hw_CS2_T hw_CS2_P = {
   /* Variable: F
    * Referenced by: '<S11>/Controller CS2'
    */
-  { -0.14517718224547321, 15.382540115281666, -0.458881050592741,
-    0.76529168594905406 },
+  { -19.399812206331912, 110.1951958682297, -5.5938114717898459,
+    8.15976877823607 },
+
+  /* Variable: Fi
+   * Referenced by: '<S11>/Controller CS2'
+   */
+  -14.922072368965409,
 
   /* Variable: Lo
    * Referenced by: '<S11>/Controller CS2'
    */
-  { 0.087990133783145241, -0.011086045986665016, 1.6805782147562658,
-    -0.7041484771724299, -0.0058686491535795259, 0.0860207299602469,
-    -0.25163680412648615, 1.8098417531259814 },
+  { 0.17927084453170883, -0.010716475141730929, 7.5170434368702681,
+    -1.4432910934151177, -0.0061238124930667708, 0.180775452289608,
+    -0.62814538935972808, 7.8886872260573133 },
+
+  /* Variable: int_band
+   * Referenced by: '<S11>/Controller CS2'
+   */
+  0.034906585039886591,
+
+  /* Variable: ref_tau
+   * Referenced by: '<S11>/Controller CS2'
+   */
+  0.2,
 
   /* Variable: ts
    * Referenced by:
    *   '<S7>/Step'
    *   '<S7>/Step1'
+   *   '<S11>/Controller CS2'
    */
   0.001,
 
@@ -100,11 +116,6 @@ P_hw_CS2_T hw_CS2_P = {
    * Referenced by: '<S12>/Gain1'
    */
   0.017453292519943295,
-
-  /* Expression: -1.5
-   * Referenced by: '<S1>/Gain'
-   */
-  -1.5,
 
   /* Expression: 0
    * Referenced by:
@@ -284,7 +295,7 @@ P_hw_CS2_T hw_CS2_P = {
   /* Computed Parameter: ControllerEnable_CurrentSetti_e
    * Referenced by: '<Root>/Controller Enable'
    */
-  1U,
+  0U,
 
   /* Computed Parameter: STOPSimulation_CurrentSetting
    * Referenced by: '<Root>/STOP Simulation'
@@ -294,7 +305,7 @@ P_hw_CS2_T hw_CS2_P = {
   /* Computed Parameter: SensorsReset_CurrentSetting
    * Referenced by: '<Root>/Sensors Reset'
    */
-  0U
+  1U
 };
 
 /*

@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'hw_CS2'.
  *
- * Model version                  : 3.50
+ * Model version                  : 3.51
  * Simulink Coder version         : 25.2 (R2025b) 28-Jul-2025
- * C/C++ source code generated on : Fri Oct 23 14:57:32 2026
+ * C/C++ source code generated on : Wed Nov  4 19:54:46 2026
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -124,6 +124,8 @@ typedef struct {
   real_T xc_Buffer;                    /* synthesized block */
   real_T u_Buffer0;                    /* synthesized block */
   real_T xh[4];                        /* '<S11>/Controller CS2' */
+  real_T xi;                           /* '<S11>/Controller CS2' */
+  real_T rf;                           /* '<S11>/Controller CS2' */
   int32_T clockTickCounter;            /* '<S7>/Pulse Generator1' */
   int8_T QS2_SubsysRanBC;              /* '<S7>/QS2' */
   boolean_T doneDoubleBufferReInit;    /* '<S7>/theta' */
@@ -160,13 +162,23 @@ struct P_hw_CS2_T_ {
   real_T F[4];                         /* Variable: F
                                         * Referenced by: '<S11>/Controller CS2'
                                         */
+  real_T Fi;                           /* Variable: Fi
+                                        * Referenced by: '<S11>/Controller CS2'
+                                        */
   real_T Lo[8];                        /* Variable: Lo
+                                        * Referenced by: '<S11>/Controller CS2'
+                                        */
+  real_T int_band;                     /* Variable: int_band
+                                        * Referenced by: '<S11>/Controller CS2'
+                                        */
+  real_T ref_tau;                      /* Variable: ref_tau
                                         * Referenced by: '<S11>/Controller CS2'
                                         */
   real_T ts;                           /* Variable: ts
                                         * Referenced by:
                                         *   '<S7>/Step'
                                         *   '<S7>/Step1'
+                                        *   '<S11>/Controller CS2'
                                         */
   real_T u_max;                        /* Variable: u_max
                                         * Referenced by: '<S11>/Controller CS2'
@@ -191,9 +203,6 @@ struct P_hw_CS2_T_ {
                                         */
   real_T Gain1_Gain;                   /* Expression: pi/180
                                         * Referenced by: '<S12>/Gain1'
-                                        */
-  real_T Gain_Gain;                    /* Expression: -1.5
-                                        * Referenced by: '<S1>/Gain'
                                         */
   real_T u_InitialCondition;           /* Expression: 0
                                         * Referenced by:
@@ -267,7 +276,7 @@ struct P_hw_CS2_T_ {
   real_T Protection_Value;             /* Expression: 1
                                         * Referenced by: '<Root>/Protection'
                                         */
-  real_T Gain_Gain_f;                  /* Expression: 180/pi
+  real_T Gain_Gain;                    /* Expression: 180/pi
                                         * Referenced by: '<S21>/Gain'
                                         */
   real_T Constant1_Value;              /* Expression: 1

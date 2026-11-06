@@ -7,9 +7,9 @@
  *
  * Code generated for Simulink model 'hw_CS1A'.
  *
- * Model version                  : 3.47
+ * Model version                  : 3.48
  * Simulink Coder version         : 25.2 (R2025b) 28-Jul-2025
- * C/C++ source code generated on : Fri Oct 30 11:39:50 2026
+ * C/C++ source code generated on : Wed Nov  4 20:02:17 2026
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -676,8 +676,9 @@ void hw_CS1A_step2(void)               /* Sample time: [0.001s, 0.0s] */
   if ((!hw_CS1A_DW.started_not_empty) ||
       hw_CS1A_DW.TmpRTBAtControllerCS1AInport4_B) {
     hw_CS1A_DW.wF[0] = 0.0;
+    hw_CS1A_DW.wT[0] = 0.0;
     hw_CS1A_DW.wF[1] = 0.0;
-    hw_CS1A_DW.wT = 0.0;
+    hw_CS1A_DW.wT[1] = 0.0;
     hw_CS1A_DW.wA = 0.0;
     hw_CS1A_DW.started_not_empty = true;
   }
@@ -688,8 +689,10 @@ void hw_CS1A_step2(void)               /* Sample time: [0.001s, 0.0s] */
   hw_CS1A_DW.wF[1] = hw_CS1A_P.bF[2] * hw_CS1A_DW.x_ref_Buffer - hw_CS1A_P.aF[2]
     * u_m;
   x = u_m - hw_CS1A_DW.xc_Buffer;
-  u_m = hw_CS1A_P.bT[0] * x + hw_CS1A_DW.wT;
-  hw_CS1A_DW.wT = hw_CS1A_P.bT[1] * x - hw_CS1A_P.aT[1] * u_m;
+  u_m = hw_CS1A_P.bT[0] * x + hw_CS1A_DW.wT[0];
+  hw_CS1A_DW.wT[0] = (hw_CS1A_P.bT[1] * x + hw_CS1A_DW.wT[1]) - hw_CS1A_P.aT[1] *
+    u_m;
+  hw_CS1A_DW.wT[1] = hw_CS1A_P.bT[2] * x - hw_CS1A_P.aT[2] * u_m;
   x = (0.0 - hw_CS1A_DW.TmpRTBAtControllerCS1AInport3_B) * hw_CS1A_P.bA[0] +
     hw_CS1A_DW.wA;
   hw_CS1A_DW.wA = (0.0 - hw_CS1A_DW.TmpRTBAtControllerCS1AInport3_B) *
@@ -758,10 +761,10 @@ void hw_CS1A_initialize(void)
   hw_CS1A_M->Timing.stepSize0 = 0.0005;
 
   /* External mode info */
-  hw_CS1A_M->Sizes.checksums[0] = (3901399161U);
-  hw_CS1A_M->Sizes.checksums[1] = (1385844996U);
-  hw_CS1A_M->Sizes.checksums[2] = (542163385U);
-  hw_CS1A_M->Sizes.checksums[3] = (649461393U);
+  hw_CS1A_M->Sizes.checksums[0] = (2054422162U);
+  hw_CS1A_M->Sizes.checksums[1] = (1067697329U);
+  hw_CS1A_M->Sizes.checksums[2] = (1317442819U);
+  hw_CS1A_M->Sizes.checksums[3] = (644876206U);
 
   {
     static const sysRanDType rtAlwaysEnabled = SUBSYS_RAN_BC_ENABLE;
