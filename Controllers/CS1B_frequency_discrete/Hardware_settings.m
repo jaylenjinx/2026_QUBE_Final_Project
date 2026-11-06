@@ -15,6 +15,10 @@ ts = 1/1000;     % 1000 Hz sampling frequency
 save_data = false;  % true:  save data
                     % false: do not save data
 
-%% Add your own fixed variable here
-% Controller parameters: the same design file as the simulation
-run('params_CS1B.m');
+%% Load this model's saved controller, independent of the current folder
+hardware_folder = fileparts(mfilename('fullpath'));
+hardware_previous_path = path;
+hardware_path_cleanup = onCleanup(@() path(hardware_previous_path));
+addpath(hardware_folder, '-begin');
+run(fullfile(hardware_folder, 'params_CS1B.m'));
+clear hardware_path_cleanup

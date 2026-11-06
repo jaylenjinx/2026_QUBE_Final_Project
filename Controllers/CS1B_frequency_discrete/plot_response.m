@@ -1,11 +1,14 @@
-function plot_response(out, cs_name, plant_name, theta_step, step_time)
-%PLOT_RESPONSE Closed-loop plots for one simulation run, saved to figures/.
+function plot_response(out, cs_name, plant_name, theta_step, step_time, save_graphs)
+%PLOT_RESPONSE Display closed-loop plots and optionally save them to figures/.
+%   Optional save_graphs: 0 displays only; 1 saves PNGs (default for old calls).
 %   Arm angle with reference, pendulum angle and motor voltage; a zoom on the
 %   step; and, when the controller logs x_hat (CS2), true vs estimated states.
+if nargin < 6, save_graphs = true; end
+
 t = out.time;  r = out.r;  th = out.theta;  al = out.alpha;  u = out.u;
 
 fig_dir = fullfile(fileparts(mfilename('fullpath')), 'figures');
-if ~isfolder(fig_dir), mkdir(fig_dir); end
+if save_graphs && ~isfolder(fig_dir), mkdir(fig_dir); end
 tag = sprintf('%s_%s', cs_name, lower(plant_name));
 
 c_ref = [0.25 0.25 0.25];  c_th = [0 0.4470 0.7410];
@@ -24,7 +27,7 @@ grid on; ylabel('\alpha(t) [deg]'); legend('\alpha', 'Location', 'northeast');
 nexttile
 plot(t, u, 'Color', c_u, 'LineWidth', 1.5);
 grid on; ylabel('V_m(t) [V]'); xlabel('Time [s]'); legend('V_m', 'Location', 'northeast');
-save_png(f1, fullfile(fig_dir, [tag '_response.png']));
+save_png(f1, fullfile(fig_dir, [tag '_response.png']), save_graphs);
 
 f2 = figure('Color', 'w', 'Position', [100 100 800 450]);
 w = t >= step_time - 0.5 & t <= step_time + 6;
@@ -34,7 +37,7 @@ yline(rad2deg(theta_step)*[0.98 1.02], ':', 'Color', [0.5 0.5 0.5]);
 grid on; xlabel('Time [s]'); ylabel('\theta(t) [deg]');
 legend('\theta^*', '\theta', '\pm2% band', 'Location', 'southeast');
 title(sprintf('%s, %s plant: step response zoom', cs_name, lower(plant_name)));
-save_png(f2, fullfile(fig_dir, [tag '_step_zoom.png']));
+save_png(f2, fullfile(fig_dir, [tag '_step_zoom.png']), save_graphs);
 
 if isprop(out, 'x_hat') || any(strcmp(out.who, 'x_hat'))
     x = as_columns(out.x, 4);  xh = as_columns(out.x_hat, 4);
@@ -49,7 +52,7 @@ if isprop(out, 'x_hat') || any(strcmp(out.who, 'x_hat'))
     end
     xlabel('Time [s]');
     nexttile(1); title(sprintf('%s, %s plant: true vs estimated states', cs_name, lower(plant_name)));
-    save_png(f3, fullfile(fig_dir, [tag '_estimation.png']));
+    save_png(f3, fullfile(fig_dir, [tag '_estimation.png']), save_graphs);
 end
 end
 
@@ -59,7 +62,8 @@ v = squeeze(v);
 if size(v, 1) == n && size(v, 2) ~= n, v = v.'; end
 end
 
-function save_png(f, file)
+function save_png(f, file, save_graphs)
+if ~save_graphs, return; end
 % Save without the interactive axes toolbar (avoids an export warning).
 for ax = findall(f, 'Type', 'axes')'
     ax.Toolbar.Visible = 'off';
