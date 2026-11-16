@@ -25,12 +25,12 @@ Delta0 = a*b - c^2;
 
 %% Linearised continuous-time model
 Ac = [0, 0, 1, 0;
-      0, 0, 0, 1;
-      0, c*h/Delta0, -b*d/Delta0, -c*Dp/Delta0;
-      0, a*h/Delta0, -c*d/Delta0, -a*Dp/Delta0];
+    0, 0, 0, 1;
+    0, c*h/Delta0, -b*d/Delta0, -c*Dp/Delta0;
+    0, a*h/Delta0, -c*d/Delta0, -a*Dp/Delta0];
 Bc = [0; 0; b*kv/Delta0; c*kv/Delta0];
 Cc = [1 0 0 0;
-      0 1 0 0];
+    0 1 0 0];
 Dc = zeros(2, 1);
 
 %% Zero-order-hold discretisation (Ts = 1 ms, as in Hardware_settings.m)

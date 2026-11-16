@@ -1,8 +1,10 @@
 function plot_response(out, cs_name, plant_name, theta_step, step_time, save_graphs)
+
 %PLOT_RESPONSE Display closed-loop plots and optionally save them to figures/.
 %   Optional save_graphs: 0 displays only; 1 saves PNGs (default for old calls).
 %   Arm angle with reference, pendulum angle and motor voltage; a zoom on the
 %   step; and, when the controller logs x_hat (CS2), true vs estimated states.
+
 if nargin < 6, save_graphs = true; end
 
 t = out.time;  r = out.r;  th = out.theta;  al = out.alpha;  u = out.u;
@@ -64,7 +66,8 @@ end
 
 function save_png(f, file, save_graphs)
 if ~save_graphs, return; end
-% Save without the interactive axes toolbar (avoids an export warning).
+
+% avoid an export warning
 for ax = findall(f, 'Type', 'axes')'
     ax.Toolbar.Visible = 'off';
 end

@@ -1,15 +1,9 @@
 function result = plot_rltool_CS1A(save_graphs)
+
 %PLOT_RLTOOL_CS Saved-design root locus and filtered reference step response.
 %   plot_rltool_CS1A       displays the figure without saving.
 %   plot_rltool_CS1A(1)    also saves figures/CS1A_PID_rltool.png.
 %   result = plot_rltool_CS1A(0) returns the models, poles and metrics as well.
-%
-% Equivalent architecture to the EFFECTIVE-ARM Control System Designer screen:
-% pendulum feedback stays fixed; the signed saved arm PID is multiplied by a
-% positive scalar k. The saved design is k=1, not an unsigned replacement for
-% the arm gain. The reference filter affects the step response, not the locus.
-% This function reads saved parameters; it does not run Simulink or hardware.
-% MATLAB reference: https://www.mathworks.com/help/control/ref/dynamicsystem.rlocus.html
 
 if nargin < 1, save_graphs = false; end
 validateattributes(save_graphs, {'numeric','logical'}, {'scalar','real','finite'});

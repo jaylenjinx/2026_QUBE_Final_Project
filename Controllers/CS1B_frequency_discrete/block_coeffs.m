@@ -1,8 +1,10 @@
 function [b, a] = block_coeffs(Cz)
+
 %BLOCK_COEFFS Difference-equation coefficients of a discrete SISO transfer function.
 %   [b, a] = BLOCK_COEFFS(Cz) returns the numerator and denominator of Cz in
 %   powers of z^-1, padded to equal length and scaled so that a(1) = 1, as the
 %   CS1 controller block expects. Cz must be proper (a causal controller).
+
 [b, a] = tfdata(Cz, 'v');
 n = max(numel(b), numel(a));
 b = [zeros(1, n - numel(b)), b];

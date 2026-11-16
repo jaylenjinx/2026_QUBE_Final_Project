@@ -1,7 +1,9 @@
 function m = step_metrics(t, theta, alpha, u, theta_step, step_time)
+
 %STEP_METRICS Arm-step performance against the project requirements.
 %   Overshoot and 2 % settling time are measured from the step at step_time;
 %   peak values are taken after the step. Angles in rad, voltage in V.
+
 k  = t >= step_time;
 tk = t(k) - step_time;
 th = theta(k);

@@ -40,7 +40,7 @@ if wn < 6
 end
 
 ps = [-zeta*wn + 1i*wn*sqrt(1-zeta^2), -zeta*wn - 1i*wn*sqrt(1-zeta^2), ...
-      -2.4*wn, -3.2*wn];            % continuous-time SFC poles [1/s]
+    -2.4*wn, -3.2*wn];            % continuous-time SFC poles [1/s]
 
 %% Integral action: removes the arm offset that friction leaves
 % Augmented state x_i(k+1) = x_i(k) + ts*(theta(k) - r), so with

@@ -89,7 +89,7 @@ if plot_rltool_figure == 1
     CS1B_results.rltool_plot = plot_rltool_CS1B(save_graphs);
 end
 
-%% Optional Control System Designer sessions (rltool root-locus workflow)
+%% Optional Control System Designer sessions
 if open_rltool == 1
     % CS1B: design directly around the ZOH-discretised plant in z.
     P_design = P_test_z;
@@ -101,6 +101,7 @@ if open_rltool == 1
         'The pendulum-only loop is not the complete stabilised system.\n' ...
         'GUI edits do not change saved parameters: export, save and rerun to validate.\n']);
 end
+
 % Results remain in CS1B_results; step plots are saved under figures/ only when save_graphs = 1.
 % Small-signal and nonlinear nominal tests do not establish hardware performance.
 clear study_path_cleanup

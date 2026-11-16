@@ -17,6 +17,7 @@ G_alpha_z = G_z(2);                 % alpha(z)/Vm(z)
 % Selected directly in z using the two-loop root-locus workflow (Ts = 1 ms).
 % Pendulum filtered PD; arm PID with a filtered derivative; unity-DC filter.
 % These are discrete pole/zero locations, not c2d conversions of CS1A.
+
 C_alpha_z = zpk(0.986, 0.942, 180, ts);
 C_theta_z = zpk([0.99777 0.9995], [1 0.942], -104, ts);
 filter_poles = [0.99777 0.997];

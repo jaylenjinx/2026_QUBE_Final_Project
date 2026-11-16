@@ -3,13 +3,6 @@ function result = plot_rltool_CS1B(save_graphs)
 %   plot_rltool_CS1B       displays the figure without saving.
 %   plot_rltool_CS1B(1)    also saves figures/CS1B_PID_rltool.png.
 %   result = plot_rltool_CS1B(0) returns the models, poles and metrics as well.
-%
-% Equivalent architecture to the EFFECTIVE-ARM Control System Designer screen:
-% pendulum feedback stays fixed; the signed saved arm PID is multiplied by a
-% positive scalar k. The saved design is k=1, not an unsigned replacement for
-% the arm gain. The reference filter affects the step response, not the locus.
-% This function reads saved parameters; it does not run Simulink or hardware.
-% MATLAB reference: https://www.mathworks.com/help/control/ref/dynamicsystem.rlocus.html
 
 if nargin < 1, save_graphs = false; end
 validateattributes(save_graphs, {'numeric','logical'}, {'scalar','real','finite'});
@@ -75,7 +68,7 @@ title(ax_locus, 'CS1B: arm root locus in the z-plane (zoom)');
 grid(ax_locus,'on');
 legend(ax_locus, [branches(1), h_poles, h_zeros, h_selected, boundary], ...
     {'Root locus: k >= 0', 'Open-loop poles', 'Open-loop zeros', ...
-     'Saved feedback poles: k = 1', boundary_label}, ...
+    'Saved feedback poles: k = 1', boundary_label}, ...
     'Location', 'southoutside', 'FontSize', 10);
 
 ax_step = nexttile(layout,2);

@@ -1,6 +1,6 @@
-%% CS1A PID: simulations, disturbance test and optional root-locus screens
+%% CS1A PID
 
-%% User settings: change 0 to 1 to open the design screens
+%% Settings
 open_rltool = 1;             % 0 = simulations only; 1 = also open both loops
 save_graphs = 0;             % 0 = display only; 1 = also save step plots as PNG
 plot_rltool_figure = 1;      % 0 = skip; 1 = static root-locus + step figure
@@ -81,13 +81,14 @@ if run_disturbance_test == 1
     ylabel('Pendulum [deg]'); xlabel('Time [s]');
 end
 
-%% Static presentation-ready plot of the saved effective-arm design
+%% RLTool Plot for Presentation
 if plot_rltool_figure == 1
     CS1A_results.rltool_plot = plot_rltool_CS1A(save_graphs);
 end
 
-%% Optional Control System Designer sessions (rltool root-locus workflow)
+%% Optional Control System Designer sessions
 if open_rltool == 1
+
     % CS1A: design in s, then discretise the controllers using Tustin.
     P_design = ss(Ac, Bc, Cc, Dc);
     P_inner_design = feedback(P_design, ss(C_alpha_s), 1, 2);
