@@ -24,6 +24,10 @@ ylabel('V_m [V]')
 
 subplot(312)
 plot(time,rad2deg(theta_rad))
+if exist('theta_ref_deg','var')   % logged by the Reference sequence block
+    hold on; plot(time, theta_ref_deg, '--'); hold off
+    legend('\theta', '\theta_{ref}')
+end
 grid
 ylabel('\theta [^o]')
 
