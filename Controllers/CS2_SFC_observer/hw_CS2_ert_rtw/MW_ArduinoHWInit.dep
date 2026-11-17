@@ -1,0 +1,88 @@
+MW_ArduinoHWInit.o: \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/toolbox/target/supportpackages/arduinotarget/src/MW_ArduinoHWInit.cpp \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/Arduino.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/WProgram.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/avr/pgmspace.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/avr/interrupt.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/avr_functions.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/wiring.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/binary.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/core_id.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/core_pins.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/imxrt.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/pins_arduino.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/HardwareSerial.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/Stream.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/Print.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/WString.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/avr/pgmspace.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/Printable.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/avr_emulation.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/usb_serial.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/usb_desc.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/usb_seremu.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/usb_keyboard.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/keylayouts.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/usb_mouse.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/usb_joystick.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/usb_midi.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/usb_rawhid.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/usb_flightsim.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/usb_audio.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/usb_touch.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/WCharacter.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/elapsedMillis.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/Arduino.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/IntervalTimer.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/CrashReport.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/Printable.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/WString.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/toolbox/target/supportpackages/arduinobase/include/io_wrappers.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/toolbox/target/supportpackages/arduinobase/include/peripheralIncludes.h \
+ /Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS2_SFC_observer/hw_CS2_ert_rtw/rtwtypes.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/toolbox/target/supportpackages/arduinotarget/scheduler/include/arduinoAVRScheduler.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/toolbox/target/supportpackages/arduinobase/include/MW_SPIwriteRead.h \
+ /Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/toolbox/target/supportpackages/arduinotarget/include/MW_ArduinoHWInit.h
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/Arduino.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/WProgram.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/avr/pgmspace.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/avr/interrupt.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/avr_functions.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/wiring.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/binary.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/core_id.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/core_pins.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/imxrt.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/pins_arduino.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/HardwareSerial.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/Stream.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/Print.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/WString.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/avr/pgmspace.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/Printable.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/avr_emulation.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/usb_serial.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/usb_desc.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/usb_seremu.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/usb_keyboard.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/keylayouts.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/usb_mouse.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/usb_joystick.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/usb_midi.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/usb_rawhid.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/usb_flightsim.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/usb_audio.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/usb_touch.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/WCharacter.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/elapsedMillis.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/Arduino.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/IntervalTimer.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/CrashReport.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/Printable.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/3P.instrset/arduinoide.instrset/aCLI/data/packages/teensy/hardware/avr/1.58.2/cores/teensy4/WString.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/toolbox/target/supportpackages/arduinobase/include/io_wrappers.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/toolbox/target/supportpackages/arduinobase/include/peripheralIncludes.h:
+/Users/jaylen/Documents/Projects/2026_QUBE_Final_Project/Controllers/CS2_SFC_observer/hw_CS2_ert_rtw/rtwtypes.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/toolbox/target/supportpackages/arduinotarget/scheduler/include/arduinoAVRScheduler.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/toolbox/target/supportpackages/arduinobase/include/MW_SPIwriteRead.h:
+/Users/jaylen/Documents/MATLAB/SupportPackages/R2025b/toolbox/target/supportpackages/arduinotarget/include/MW_ArduinoHWInit.h:

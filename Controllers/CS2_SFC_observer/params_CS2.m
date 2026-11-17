@@ -51,7 +51,7 @@ ps = [-zeta*wn + 1i*wn*sqrt(1-zeta^2), -zeta*wn - 1i*wn*sqrt(1-zeta^2), ...
 % and friction offsets are removed over about a second instead.
 use_integral = true;                % false: plain SFC (Fi = 0)
 p_int    = -1;                      % integrator pole [1/s]
-int_band = 2*pi/180;                % integrate only within +/-2 deg of the reference [rad]
+int_band = 5*pi/180;                % integrate only within +/-2 deg of the reference [rad]
 ref_tau  = 0.2;                     % reference filter time constant [s] (0 = off)
 
 if use_integral

@@ -11,5 +11,6 @@
 % pendulum on a 220 deg step (+110 -> -110). CS1A is slower and handled
 % +/-110 deg on the hardware (run 07), but the same sequence is used for
 % both so the two controllers can be compared directly.
+
 ref_seq_deg = [45 -45 90 0 -90 0];          % arm reference values [deg]
-ref_hold_s  = 12;                           % time on each value [s] (72 s in total)
+ref_hold_s  = 8;                           % time on each value [s] (72 s in total)
