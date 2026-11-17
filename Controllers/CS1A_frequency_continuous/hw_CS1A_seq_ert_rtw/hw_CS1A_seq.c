@@ -9,7 +9,7 @@
  *
  * Model version                  : 3.54
  * Simulink Coder version         : 25.2 (R2025b) 28-Jul-2025
- * C/C++ source code generated on : Tue Nov 17 17:54:14 2026
+ * C/C++ source code generated on : Tue Nov 17 17:58:23 2026
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: ARM Compatible->ARM Cortex
@@ -28,7 +28,7 @@
 #include "zero_crossing_types.h"
 
 /* Named constants for MATLAB Function: '<Root>/ref_seq' */
-#define hw_CS1A_seq_ref_hold_s         (12.0)
+#define hw_CS1A_seq_ref_hold_s         (8.0)
 
 /* Block signals (default storage) */
 B_hw_CS1A_seq_T hw_CS1A_seq_B;
@@ -841,10 +841,10 @@ void hw_CS1A_seq_initialize(void)
   hw_CS1A_seq_M->Timing.stepSize0 = 0.0005;
 
   /* External mode info */
-  hw_CS1A_seq_M->Sizes.checksums[0] = (2885552160U);
-  hw_CS1A_seq_M->Sizes.checksums[1] = (2094100932U);
-  hw_CS1A_seq_M->Sizes.checksums[2] = (3489669633U);
-  hw_CS1A_seq_M->Sizes.checksums[3] = (3293469448U);
+  hw_CS1A_seq_M->Sizes.checksums[0] = (3804364501U);
+  hw_CS1A_seq_M->Sizes.checksums[1] = (4233790540U);
+  hw_CS1A_seq_M->Sizes.checksums[2] = (2763608390U);
+  hw_CS1A_seq_M->Sizes.checksums[3] = (241196834U);
 
   {
     static const sysRanDType rtAlwaysEnabled = SUBSYS_RAN_BC_ENABLE;
